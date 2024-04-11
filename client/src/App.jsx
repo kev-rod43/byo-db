@@ -35,6 +35,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Outlet />
+      <h1>App is running!</h1>
     </ApolloProvider>
   );
 }
