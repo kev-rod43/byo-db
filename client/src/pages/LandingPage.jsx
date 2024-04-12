@@ -1,10 +1,12 @@
 
 import React from "react";
-import ResponsiveDrawer from '../components/layout/ResponsiveDrawer';
+import NavDrawer from '../components/layout/NavDrawer';
+
 
 const LandingPage = () => {
 return(<>
-    <ResponsiveDrawer/>
+
+    <NavDrawer/>
     <h1>Welcome!</h1>
 </>)
 };

@@ -8,7 +8,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
-import LandingPage from './pages/LandingPage';
+
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -39,9 +39,6 @@ function App() {
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
         <Outlet />
-        <LandingPage />
-   
-      
       </ThemeProvider>
     </ApolloProvider>
   );
