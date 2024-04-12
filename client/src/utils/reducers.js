@@ -14,5 +14,9 @@ import {
 } from './actions';
 
 export default function reducer(state, action) {
-    switch (action.type){}
+    switch (action.type){
+        case CREATE_COLLECTION :{
+            
+        }
+    }
 }
