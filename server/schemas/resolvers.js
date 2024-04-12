@@ -3,13 +3,11 @@ const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    me: (parent, args, context) => {
-      if (!context.user) {
+    me: async (parent, args, context) => {
+      if (context.user) {
         return User.find({ _id: context.user._id }).select("__v");
       }
-      throw new AuthenticationError(
-        "You need to be logged in to view your collections!"
-      );
+      throw new AuthenticationError;
     },
   },
   Mutation: {
@@ -29,13 +27,13 @@ const resolvers = {
         const user = User.findOne({ email });
 
         if (!user) {
-          throw new AuthenticationError("Incorrect email or password!");
+          throw new AuthenticationError;
         }
 
         const validPassword = user.isCorrectPassword(password);
 
         if (!validPassword) {
-          throw new AuthenticationError("Incorrect email or password!");
+          throw new AuthenticationError;
         }
       } catch (err) {
         console.error(err);
