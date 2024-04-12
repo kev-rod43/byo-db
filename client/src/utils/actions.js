@@ -1,0 +1,29 @@
+export const CREATE_COLLECTION = 'CREATE_COLLECTION';
+
+export const DELETE_COLLECTION = 'DELETE_COLLECTION';
+
+export const UPDATE_COLLECTION = 'UPDATE_COLLECTION';
+
+
+
+export const CREATE_PRODUCT = 'SET_STUDENT_MAJOR';
+
+export const DELETE_PRODUCT = 'DELETE_PRODUCT';
+
+export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
+
+
+
+export const CREATE_TAG = 'CREATE_TAG';
+
+export const DELETE_TAG = 'DELETE_TAG';
+
+export const UPDATE_TAG = 'UPDATE_TAG';
+
+export const APPLY_TAG = 'APPLY_TAG';
+
+export const UNAPPLY_TAG = 'UNAPPLY_TAG';
+
+
+
+export const SORT_PRODUCT = 'SORT_PRODUCT';
