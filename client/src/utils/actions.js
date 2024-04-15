@@ -25,7 +25,7 @@ export const UPDATE_COLLECTION = 'UPDATE_COLLECTION';
  * -takes in: { productObject, collectionName: <String> }
  * -finds a collection by name in user.collections, pushes the productObject to the user.collections[?].products array.
  */
-export const CREATE_PRODUCT = 'SET_STUDENT_MAJOR';
+export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 
 /**
  * DELETE_PRODUCT
