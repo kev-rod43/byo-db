@@ -75,7 +75,7 @@ export const UNAPPLY_TAG = 'UNAPPLY_TAG';
  * -takes in: 
  *  {
  *      sortFunction: <Function>,
- *      collectionId: <String>
+ *      collectionName: <String>
  *  }
  * - finds a collection by name in user.collections, performs a sort on user.collections[?].products array utilizing the sortFunction.
  */

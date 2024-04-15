@@ -108,5 +108,17 @@ export default function reducer(state, action) {
                  })
             }
         }
+        case SORT_PRODUCT: {
+            return {
+                ...state,
+                collections: [...state.collections].map((collection) => {
+                   if (collection.collectionName === action.payload.collectionName) {
+                    collection.products = [...collection.products].sort(action.payload.sortFunction)
+                   }
+                   return collection;
+                    
+                })
+            }
+        }
     }
 }
