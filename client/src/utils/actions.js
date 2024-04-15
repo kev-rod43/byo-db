@@ -60,7 +60,7 @@ export const APPLY_TAG = 'APPLY_TAG';
  * UNAPPLY_TAG
  * -takes in:
  *  { 
- *      tagId: <Strig>,
+ *      tagName: <Strig>,
  *      collectionName: <String>,
  *      productId: <String>,
  *  }
