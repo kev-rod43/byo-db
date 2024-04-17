@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
@@ -16,8 +17,12 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
+import TocIcon from '@mui/icons-material/Toc';
+import HomeIcon from '@mui/icons-material/Home'; // Assuming HomeIcon is for "User"
+import TableChartIcon from '@mui/icons-material/TableChart'; // Assuming TableChartIcon is for "Tables"
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 function NavDrawer(props) {
   const { window } = props;
@@ -39,16 +44,31 @@ function NavDrawer(props) {
     }
   };
 
+  const selectIcon = (index) => {
+    switch (index) {
+      case 0:
+        return <HomeIcon />;
+      case 1:
+        return <TocIcon />;
+      case 2:
+        return <TableChartIcon />;
+      case 3:
+        return <ShowChartIcon />;
+      default:
+        return <MailIcon />;
+    }
+  };
+
   const drawer = (
     <div>
       <Toolbar />
       <Divider />
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        {['User', 'Dashboard', 'Tables', 'Charts'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {selectIcon(index)}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -56,32 +76,15 @@ function NavDrawer(props) {
         ))}
       </List>
       <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
     </div>
   );
 
+  const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
-        }}
-      >
+      <AppBar position="fixed" sx={{ width: { sm: `calc(100% - ${drawerWidth}px)` }, ml: { sm: `${drawerWidth}px` } }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -93,7 +96,7 @@ function NavDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Responsive drawer
+            Responsive Drawer
           </Typography>
         </Toolbar>
       </AppBar>
@@ -102,12 +105,10 @@ function NavDrawer(props) {
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-
+          container={container}
           variant="temporary"
           open={mobileOpen}
-          onTransitionEnd={handleDrawerTransitionEnd}
           onClose={handleDrawerClose}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
@@ -130,15 +131,12 @@ function NavDrawer(props) {
           {drawer}
         </Drawer>
       </Box>
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-      >
-        <Toolbar />
-      </Box>
     </Box>
   );
 }
 
+NavDrawer.propTypes = {
+  window: PropTypes.func,
+};
 
-export default NavDrawer;
+export default NavDrawer
