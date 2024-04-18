@@ -9,7 +9,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
-
+import NavDrawer  from './components/layout/NavDrawer';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -41,7 +41,10 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
-        <Outlet />
+        <NavDrawer>
+          
+          <Outlet />
+        </NavDrawer>
       </ThemeProvider>
     </ApolloProvider>
   );

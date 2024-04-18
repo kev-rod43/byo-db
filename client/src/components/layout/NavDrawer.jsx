@@ -142,13 +142,11 @@ export default function NavDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {['Home', 'Collections', 'Tables', 'Charts'].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                <ListItemIcon>
-//                 {selectIcon(index)}
-//               </ListItemIcon>
+                  {selectIcon(index)}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -159,12 +157,6 @@ export default function NavDrawer() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <Typography paragraph>
-          Placeholder landing page txt
-        </Typography>
-        <Typography paragraph> 
-        Placeholder landing page txt
-        </Typography>
       </Main>
     </Box>
   );
