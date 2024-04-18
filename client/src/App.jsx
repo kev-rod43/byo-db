@@ -12,9 +12,6 @@ import theme from './theme';
 import NavDrawer  from './components/layout/NavDrawer';
 import CustomModal from './components/common/CustomModal';
 
-
-
-
 import BoxTest from "./components/common/Welcome"
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({

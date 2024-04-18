@@ -23,7 +23,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import TocIcon from '@mui/icons-material/Toc';
 import HomeIcon from '@mui/icons-material/Home'; 
-import TableChartIcon from '@mui/icons-material/TableChart'; 
+import TableChartIcon from '@mui/icons-material/TableChart';
 
 import CustomModal from '../common/CustomModal';
 
