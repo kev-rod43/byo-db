@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
-export default function DataGrid({collection}) {
+export default function CollectionDataGrid({collection}) {
   const flattenedData = [
     ...collection.products.map((product, index) => ({
         id: index,
