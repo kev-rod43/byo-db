@@ -7,7 +7,7 @@ export const QUERY_ME = gql`
       username
       email
       collections {
-        name
+        collection_name
         products {
           product_name
           stock
@@ -15,8 +15,14 @@ export const QUERY_ME = gql`
           purchased
           price
           condition
-          shipping_properties
+          shipping_properties {
+            height
+            width
+            depth
+            weight
+          }
           tag {
+            _id
             tag_name
           }
         }
