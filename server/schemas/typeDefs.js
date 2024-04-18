@@ -14,7 +14,7 @@ const typeDefs = `
         price: Float
         condition: String
         shipping_properties: Shipping
-        tag: [Tag]
+        tags: [Tag]
     }
 
     type Shipping {
@@ -25,6 +25,7 @@ const typeDefs = `
     }
 
     type Tag {
+        _id: ID!
         tag_name: String!
     }
 

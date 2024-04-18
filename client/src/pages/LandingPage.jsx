@@ -1,13 +1,15 @@
 
 import React from "react";
-import NavDrawer from '../components/layout/NavDrawer';
+import WelcomeBox from "../components/common/Welcome"
+
 
 
 const LandingPage = () => {
 return(<>
+    
+    <WelcomeBox/>
+    
 
-    <NavDrawer/>
-    <h1>Welcome!</h1>
 </>)
 };
 
