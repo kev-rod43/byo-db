@@ -76,8 +76,20 @@ const resolvers = {
         return updatedUser;
       }
       throw AuthenticationError
+    },
+    createProduct: async (parent, { collectionName, productInput }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id, 'collections.collection_name': collectionName },
+          { $addToSet: { 'collections.$.products': productInput} },
+          { new: true }
+        );
+        return updatedUser;
+      }
+      throw AuthenticationError
     }
   },
+
 };
 
 module.exports = resolvers;

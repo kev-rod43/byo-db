@@ -18,7 +18,25 @@ const typeDefs = `
         tags: [Tag]
     }
 
+    input ProductInput{
+        product_name: String!
+        stock: Int!
+        description: String
+        purchased: Float
+        price: Float
+        condition: String
+        shipping_properties: ShippingInput
+        tags: [TagInput]
+    }
+
     type Shipping {
+        height: Float
+        width: Float
+        depth: Float
+        weight: Float
+    }
+
+    input ShippingInput {
         height: Float
         width: Float
         depth: Float
@@ -27,6 +45,10 @@ const typeDefs = `
 
     type Tag {
         _id: ID!
+        tag_name: String!
+    }
+
+    input TagInput {
         tag_name: String!
     }
 
@@ -50,6 +72,7 @@ const typeDefs = `
         updateCollection(currentName: String!, newName: String!): User
         createCollection(collectionName: String!): User
         deleteCollection(collectionName: String!): User
+        createProduct(collectionName: String!, productInput: ProductInput!): User
     }
 `;
 
