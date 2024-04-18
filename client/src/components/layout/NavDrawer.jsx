@@ -163,12 +163,11 @@ export default function NavDrawer() {
 
 
 
-
+      
       <Main open={open}>
         <DrawerHeader />
         <Outlet />
       </Main>
-
       
       <CustomModal open={modalOpen} handleClose={handleModalClose} title="Modal Title">
         <Typography>Sample content for the modal goes here.</Typography>
