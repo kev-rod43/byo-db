@@ -7,6 +7,7 @@ const typeDefs = `
     }
 
     type Product {
+        _id: ID!
         product_name: String!
         stock: Int!
         description: String
