@@ -1,5 +1,6 @@
 
 import * as React from 'react';
+import { Outlet } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -21,30 +22,27 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import TocIcon from '@mui/icons-material/Toc';
-import HomeIcon from '@mui/icons-material/Home'; // Assuming HomeIcon is for "User"
-import TableChartIcon from '@mui/icons-material/TableChart'; // Assuming TableChartIcon is for "Tables"
+import HomeIcon from '@mui/icons-material/Home'; 
+import TableChartIcon from '@mui/icons-material/TableChart'; 
 
+import CustomModal from '../common/CustomModal';
 
 const drawerWidth = 240;
 
-
-  const selectIcon = (index) => {
-    switch (index) {
-      case 0:
-        return <HomeIcon />;
-      case 1:
-        return <TocIcon />;
-      case 2:
-        return <TableChartIcon />;
-      case 3:
-        return <ShowChartIcon />;
-      default:
-        return <MailIcon />;
-    }
-  };
-
-
-
+const selectIcon = (index) => {
+  switch (index) {
+    case 0:
+      return <HomeIcon />;
+    case 1:
+      return <TocIcon />;
+    case 2:
+      return <TableChartIcon />;
+    case 3:
+      return <ShowChartIcon />;
+    default:
+      return <MailIcon />;
+  }
+};
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -86,7 +84,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
   justifyContent: 'flex-end',
 }));
@@ -94,6 +91,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function NavDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [modalOpen, setModalOpen] = React.useState(false);  // State for modal visibility
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -101,6 +99,14 @@ export default function NavDrawer() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleModalOpen = () => {
+    setModalOpen(true);  // Function to open the modal
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);  // Function to close the modal
   };
 
   return (
@@ -117,7 +123,7 @@ export default function NavDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h3" noWrap component="div" >
+          <Typography variant="h3" noWrap component="div">
             B.Y.O-DB
           </Typography>
         </Toolbar>
@@ -144,7 +150,7 @@ export default function NavDrawer() {
         <List>
           {['Home', 'Collections', 'Tables', 'Charts'].map((text, index) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={handleModalOpen}> 
                 <ListItemIcon>
                   {selectIcon(index)}
                 </ListItemIcon>
@@ -153,11 +159,20 @@ export default function NavDrawer() {
             </ListItem>
           ))}
         </List>
-        
       </Drawer>
+
+
+
+
       <Main open={open}>
         <DrawerHeader />
+        <Outlet />
       </Main>
+
+      
+      <CustomModal open={modalOpen} handleClose={handleModalClose} title="Modal Title">
+        <Typography>Sample content for the modal goes here.</Typography>
+      </CustomModal>
     </Box>
   );
 }

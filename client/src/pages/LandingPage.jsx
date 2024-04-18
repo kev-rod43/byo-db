@@ -1,14 +1,14 @@
 
 import React from "react";
-import NavDrawer from '../components/layout/NavDrawer';
-import VerticalTabs from "../components/layout/CollectionTabs";
+import BoxTest from "../components/common/Welcome"
+import NavDrawer from "../components/layout/NavDrawer";
 
 const LandingPage = () => {
 return(<>
+    
+    
+    <BoxTest/>
 
-    
-    <VerticalTabs/>
-    
 </>)
 };
 

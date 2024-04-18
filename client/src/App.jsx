@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import {
   ApolloClient,
@@ -10,7 +10,12 @@ import { setContext } from '@apollo/client/link/context';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
 import NavDrawer  from './components/layout/NavDrawer';
+import CustomModal from './components/common/CustomModal';
 
+
+
+
+import BoxTest from "./components/common/Welcome"
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -38,12 +43,11 @@ const client = new ApolloClient({
 });
 
 function App() {
-  return (
+return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
         <NavDrawer>
           
-          <Outlet />
         </NavDrawer>
       </ThemeProvider>
     </ApolloProvider>
