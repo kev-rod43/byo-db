@@ -27,7 +27,10 @@ const productSchema = new Schema(
         },
         shipping_properties: shippingSchema,
         
-        tags: [TagModel]
+        tags: [{
+            type: Schema.Types.ObjectId,
+            ref: "Tag"
+        }]
     }
 );
 

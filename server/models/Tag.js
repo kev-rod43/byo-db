@@ -9,6 +9,6 @@ const tagSchema = new Schema(
     }
 );
 
-const Tag = model ("Tag", tagSchema);
+const Tag = model("Tag", tagSchema);
 
 module.exports = Tag;
