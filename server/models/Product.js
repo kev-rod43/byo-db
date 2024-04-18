@@ -27,7 +27,7 @@ const productSchema = new Schema(
         },
         shipping_properties: shippingSchema,
         
-        tag: [TagModel]
+        tags: [TagModel]
     }
 );
 
