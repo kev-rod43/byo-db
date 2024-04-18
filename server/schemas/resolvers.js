@@ -22,6 +22,15 @@ const resolvers = {
         return;
       }
     },
+
+    deleteUser: async (parent, {userID}) => {
+      const deletedUser = await User.findOneAndDelete(
+        {_id: userID}
+      );
+
+      return deletedUser;
+    },
+
     login: async (parent, { email, password }) => {
       try {
         const user = User.findOne({ email });
@@ -39,6 +48,18 @@ const resolvers = {
         console.error(err);
         return;
       }
+    },
+
+    addProduct: async (parent, { product_name, stock, description, purchased, price, condition, shipping_properties, tag_name}) => {
+      const product = await Product.create({product_name, stock, description, purchased, price, condition, shipping_properties, tag_name});
+
+      return product;
+    },
+
+    deleteProduct: async (parent, { productID }) => {
+      return Product.findOneAndDelete(
+        { _id: productID },
+      );
     },
   },
 };
