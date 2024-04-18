@@ -7,7 +7,8 @@ const LandingPage = () => {
 return(<>
 
     <NavDrawer/>
-    <h1>Welcome!</h1>
+    
+    
 </>)
 };
 
