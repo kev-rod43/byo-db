@@ -66,7 +66,17 @@ const resolvers = {
       }
       throw AuthenticationError
     },
-
+    deleteCollection: async (parent, { collectionName }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id, 'collections.collection_name': collectionName },
+          { $pull: { collections: {collection_name: collectionName}} },
+          { new: true }
+        );
+        return updatedUser;
+      }
+      throw AuthenticationError
+    }
   },
 };
 

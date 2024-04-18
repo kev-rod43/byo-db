@@ -49,6 +49,7 @@ const typeDefs = `
         login(email: String!, password: String!): Auth
         updateCollection(currentName: String!, newName: String!): User
         createCollection(collectionName: String!): User
+        deleteCollection(collectionName: String!): User
     }
 `;
 
