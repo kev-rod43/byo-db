@@ -5,7 +5,7 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.find({ _id: context.user._id }).select("__v");
+        return User.find({ _id: context.user._id }).select("__v").populate("tags");
       }
       throw new AuthenticationError;
     },
@@ -24,7 +24,7 @@ const resolvers = {
     },
     login: async (parent, { email, password }) => {
       try {
-        const user = User.findOne({ email });
+        const user = User.findOne({ email }).populate("tags");
 
         if (!user) {
           throw new AuthenticationError;
