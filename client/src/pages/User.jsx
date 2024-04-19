@@ -3,7 +3,7 @@ import WelcomeBox from "../components/common/Welcome"
 
 
 
-const User = () => {
+const UserPage = () => {
 return(<>
     
     
@@ -12,4 +12,4 @@ return(<>
 </>)
 };
 
-export default User;
+export default UserPage;

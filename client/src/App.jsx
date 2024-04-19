@@ -46,9 +46,7 @@ function App() {
 return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
-        <NavDrawer>
-          
-        </NavDrawer>
+        <NavDrawer/>
       </ThemeProvider>
     </ApolloProvider>
   );

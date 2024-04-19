@@ -3,7 +3,7 @@ import WelcomeBox from "../components/common/Welcome"
 
 
 
-const Collections = () => {
+const CollectionsPage = () => {
 return(<>
     
     
@@ -12,4 +12,4 @@ return(<>
 </>)
 };
 
-export default Collections;
+export default CollectionsPage;
