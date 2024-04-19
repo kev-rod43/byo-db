@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-// import AuthService from './path-to-your-auth-service'; // Update the path accordingly
+import AuthService from '../../utils/auth';
 
 const UserProfile = () => {
   const [profile, setProfile] = useState(null);

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { LOGIN } from '../utils/mutations'; // Ensure the path to your mutations file is correct
+import { LOGIN } from '../utils/mutations'; 
 import AuthService from '../utils/auth';
 
 
