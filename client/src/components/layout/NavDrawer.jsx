@@ -24,6 +24,7 @@ import ShowChartIcon from '@mui/icons-material/ShowChart';
 import TocIcon from '@mui/icons-material/Toc';
 import HomeIcon from '@mui/icons-material/Home'; 
 import TableChartIcon from '@mui/icons-material/TableChart';
+import ProductForm from '../forms/products/ProductForm';
 
 import CustomModal from '../common/CustomModal';
 
@@ -167,6 +168,7 @@ export default function NavDrawer() {
       <Main open={open}>
         <DrawerHeader />
         <Outlet />
+        <ProductForm />
       </Main>
 
       

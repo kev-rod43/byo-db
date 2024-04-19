@@ -10,7 +10,7 @@ export default function CollectionForm ({ mode }) {
         e.preventDefault();
         mode === 'add'
         ? modeAdd()     // replace with addCollection mutation 
-        : modeUpdate()  // replace with updateCollectin mutation
+        : modeUpdate()  // replace with updateCollection mutation
 
     }
 
@@ -44,7 +44,12 @@ export default function CollectionForm ({ mode }) {
                             : `What would you like to rename the database to?`
                         }
                     </Typography>
-                    <TextField sx={styles.formElements} onChange={handleChange} placeholder='Books'/><br/>
+                    <TextField
+                    sx={styles.formElements}
+                    fullWidth
+                    required
+                    onChange={handleChange}
+                    placeholder='Books'/><br/>
                     <Button sx={styles.formElements} type='submit' disabled={formData.name.trim() == ''}>Create</Button>
                 </form>
             </Box>
