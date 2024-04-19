@@ -73,6 +73,8 @@ const typeDefs = `
         createCollection(collectionName: String!): User
         deleteCollection(collectionName: String!): User
         createProduct(collectionName: String!, productInput: ProductInput!): User
+        deleteProduct(collectionName: String!, productId: ID!): User
+        updateProduct(collectionName: String!, updatedProductObject: ProductInput!, productId: ID!): User
     }
 `;
 
