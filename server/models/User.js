@@ -16,6 +16,10 @@ const userSchema = new Schema(
             unique: true,
             match: [/.+@.+\..+/, 'Must use a valid email address'],
         },
+        password: {
+            type: String,
+            required: true,
+          },
         collections: [collectionSchema]
     },
 );
@@ -33,7 +37,7 @@ userSchema.pre('save', async function (next) {
 // custom method to compare and validate password for logging in
 userSchema.methods.isCorrectPassword = async function (password) {
     return bcrypt.compare(password, this.password);
-};
+  };
 
 const User = model( "User", userSchema)
 module.exports = User;
