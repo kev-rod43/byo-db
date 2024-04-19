@@ -1,34 +1,62 @@
-import React from 'react';
-import { Box, Button } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import React, { useState } from 'react';
+import { Box, Button, Typography } from '@mui/material';
+import  LoginForm from '../forms/Login'; 
+import SignupForm from '../forms/Signup'; 
 
-export default function WelcomeBox() {
+function WelcomeBox() {
+  const [view, setView] = useState('welcome'); // 'welcome', 'login', 'signup'
+
+  const handleLoginClick = () => {
+    setView('login');
+  };
+
+  const handleSignupClick = () => {
+    setView('signup');
+  };
+
+  // Backwards Navigation
+  const handleBack = () => {
+    setView('welcome'); // Set view back to welcome
+  };
+
   return (
     <Box
-      height={300}
-      width={400} 
+      width={500}  // Maintain a consistent width
       my={4}
       display="flex"
-      flexDirection="column"  
+      flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      gap={2} 
+      gap={2}
       p={2}
       sx={{
-        border: '2px',
-        borderRadius: '16px', 
-        boxShadow: '0 2px 22px rgba(0, 0, 0, 0.1)', 
-        margin: 'auto', 
-        position: 'relative', 
-        top: '50%',
-        transform: 'translateY(-50%)' 
+        borderRadius: '16px',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+        margin: 'auto',
+        position: 'relative',
+        top: '20vh',  // Lower positioning on the page
+        transform: 'translateY(-50%)',
+        bgcolor: 'background.paper',  // Ensure background color is set if border is removed
+        transition: 'all 0.3s',  // Smooth transition for resizing
       }}
     >
-      <Typography variant="h5" component="h1" gutterBottom>
-        Welcome to Build Your own DB! 
-      </Typography>
-      <Button variant="contained" color="primary">Login</Button>
-      <Button variant="outlined" color="primary" >Signup</Button>
+      {view === 'welcome' && (
+        <>
+          <Typography variant="h5" component="h1" gutterBottom>
+            Welcome!
+          </Typography>
+          <Button variant="contained" color="primary" onClick={handleLoginClick}>Login</Button>
+          <Button variant="outlined" color="primary" onClick={handleSignupClick}>Signup</Button>
+        </>
+      )}
+      {view === 'login' && (
+        <LoginForm  onBack={handleBack}/>
+      )}
+      {view === 'signup' && (
+        <SignupForm onBack={handleBack}/>
+      )}
     </Box>
   );
 }
+
+export default WelcomeBox;
