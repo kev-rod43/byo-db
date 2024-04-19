@@ -9,6 +9,7 @@ export const QUERY_ME = gql`
       collections {
         collection_name
         products {
+          _id
           product_name
           stock
           description
@@ -21,7 +22,7 @@ export const QUERY_ME = gql`
             depth
             weight
           }
-          tag {
+          tags {
             _id
             tag_name
           }

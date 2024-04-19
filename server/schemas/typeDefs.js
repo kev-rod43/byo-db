@@ -7,6 +7,7 @@ const typeDefs = `
     }
 
     type Product {
+        _id: ID!
         product_name: String!
         stock: Int!
         description: String
@@ -17,7 +18,25 @@ const typeDefs = `
         tags: [Tag]
     }
 
+    input ProductInput{
+        product_name: String!
+        stock: Int!
+        description: String
+        purchased: Float
+        price: Float
+        condition: String
+        shipping_properties: ShippingInput
+        tags: [TagInput]
+    }
+
     type Shipping {
+        height: Float
+        width: Float
+        depth: Float
+        weight: Float
+    }
+
+    input ShippingInput {
         height: Float
         width: Float
         depth: Float
@@ -26,6 +45,10 @@ const typeDefs = `
 
     type Tag {
         _id: ID!
+        tag_name: String!
+    }
+
+    input TagInput {
         tag_name: String!
     }
 
@@ -71,13 +94,10 @@ const typeDefs = `
     type Mutation {
         addUser(username: String!, email: String!, password: String!): Auth
         login(email: String!, password: String!): Auth
-        deleteUser(_id: ID!): User
-        addProduct(product: ProductData): Product
-        deleteProduct(product_name: String!): Product
-        addCollection(collection_name: String!, products: [ProductData] ): Collection
-        deleteCollection(collection_name: String!): Collection
-        applyTag(tag_name: String!): Tag
-        unapplyTag(tag_name: String!): Tag
+        updateCollection(currentName: String!, newName: String!): User
+        createCollection(collectionName: String!): User
+        deleteCollection(collectionName: String!): User
+        createProduct(collectionName: String!, productInput: ProductInput!): User
     }
 `;
 

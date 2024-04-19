@@ -25,14 +25,11 @@ const productSchema = new Schema(
             type: String,
         },
         shipping_properties: shippingSchema,
-
-        tag: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: "Tag"
-            },
-        ],
         
+        tags: [{
+            type: Schema.Types.ObjectId,
+            ref: "Tag"
+        }]
     }
 );
 
