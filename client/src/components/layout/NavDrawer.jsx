@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -19,30 +19,24 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import TocIcon from '@mui/icons-material/Toc';
 import HomeIcon from '@mui/icons-material/Home'; 
-import TableChartIcon from '@mui/icons-material/TableChart'; 
 
-import CustomModal from '../common/CustomModal';
+
+
 
 const drawerWidth = 240;
 
-const selectIcon = (index) => {
-  switch (index) {
-    case 0:
-      return <HomeIcon />;
-    case 1:
-      return <TocIcon />;
-    case 2:
-      return <TableChartIcon />;
-    case 3:
-      return <ShowChartIcon />;
-    default:
-      return <MailIcon />;
-  }
-};
+const pages = [
+  { name: 'Home', icon: <HomeIcon />, route: '/' },
+  { name: 'User', icon: <AccountCircleIcon />, route: '/user' },
+  { name: 'Collections', icon: <TocIcon />, route: '/collections' },
+  { name: 'Charts', icon: <ShowChartIcon />, route: '/charts' }
+  
+];
+
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -91,7 +85,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function NavDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [modalOpen, setModalOpen] = React.useState(false);  // State for modal visibility
+  const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -101,13 +95,6 @@ export default function NavDrawer() {
     setOpen(false);
   };
 
-  const handleModalOpen = () => {
-    setModalOpen(true);  // Function to open the modal
-  };
-
-  const handleModalClose = () => {
-    setModalOpen(false);  // Function to close the modal
-  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -148,13 +135,11 @@ export default function NavDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Home', 'Collections', 'Tables', 'Charts'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton onClick={handleModalOpen}> 
-                <ListItemIcon>
-                  {selectIcon(index)}
-                </ListItemIcon>
-                <ListItemText primary={text} />
+          {pages.map((page) => (
+            <ListItem key={page.name} disablePadding>
+              <ListItemButton onClick={() => navigate(page.route)}>
+                <ListItemIcon>{page.icon}</ListItemIcon>
+                <ListItemText primary={page.name} />
               </ListItemButton>
             </ListItem>
           ))}
@@ -163,16 +148,13 @@ export default function NavDrawer() {
 
 
 
-
+      {/* Main app render output.  */}
       <Main open={open}>
         <DrawerHeader />
-        <Outlet />
+        <Outlet/>
       </Main>
-
       
-      <CustomModal open={modalOpen} handleClose={handleModalClose} title="Modal Title">
-        <Typography>Sample content for the modal goes here.</Typography>
-      </CustomModal>
+     
     </Box>
   );
 }
