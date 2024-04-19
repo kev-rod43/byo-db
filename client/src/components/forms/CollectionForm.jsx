@@ -1,14 +1,25 @@
 import * as React from 'react';
 import { Container, Box, TextField, Button, Typography } from '@mui/material';
 
-export default function AddCollectionForm () {
+export default function CollectionForm ({ mode }) {
     const [formData, setFormData] = React.useState({ name: '' });
 
     const handleChange = (e) => setFormData({ name: e.target.value});
 
-    const handleSubmit = () => {
-        console.log(formData);
-        return setFormData({ name: '' });
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        mode === 'add'
+        ? modeAdd()     // replace with addCollection mutation 
+        : modeUpdate()  // replace with updateCollectin mutation
+
+    }
+
+    const modeAdd = () => {
+        console.log(`Collection added.`);
+    }
+
+    const modeUpdate = () => {
+        console.log(`Collection updated.`);
     }
 
     const styles = {
@@ -26,7 +37,13 @@ export default function AddCollectionForm () {
         <Container sx={styles.container} >
             <Box>
                 <form style={styles} onSubmit={handleSubmit}>
-                    <Typography sx={styles.formElements}>Enter collection name:</Typography>
+                    <Typography sx={styles.formElements}>
+                        {
+                            (mode === 'add') 
+                            ? `Enter a name for the collection`
+                            : `What would you like to rename the database to?`
+                        }
+                    </Typography>
                     <TextField sx={styles.formElements} onChange={handleChange} placeholder='Books'/><br/>
                     <Button sx={styles.formElements} type='submit' disabled={formData.name.trim() == ''}>Create</Button>
                 </form>
