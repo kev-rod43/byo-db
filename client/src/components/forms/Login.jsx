@@ -7,8 +7,11 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
+import useLogin from '../../hooks/useLogin';
+
 
 function LoginForm({ onBack }) {
+
   const [values, setValues] = React.useState({
     email: '',
     password: '',
@@ -27,10 +30,13 @@ function LoginForm({ onBack }) {
     event.preventDefault();
   };
 
-  const handleSubmit = (event) => {
+  // Login handler
+  const { login, loading, error } = useLogin();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Add login logic here
-    console.log('Login Submitted', values);
+    const { email, password } = values;
+    await login(email, password);
   };
 
   return (
@@ -84,6 +90,7 @@ function LoginForm({ onBack }) {
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
+          
         >
           Log In
         </Button>
@@ -95,7 +102,6 @@ function LoginForm({ onBack }) {
         >
           Back
         </Button>
-        
       </Box>
     </Container>
   );
