@@ -1,14 +1,9 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
+import { Box, TextField, IconButton, InputAdornment, Container, Button } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import useSignup from '../../hooks/useSignup';  // Adjust the import path as necessary
 
-function SignupForm( { onBack }) {
+function SignupForm({ onBack }) {
   const [values, setValues] = React.useState({
     username: '',
     email: '',
@@ -16,6 +11,8 @@ function SignupForm( { onBack }) {
     confirmPassword: '',
     showPassword: false,
   });
+
+  const { signup, loading, error } = useSignup();
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -29,6 +26,15 @@ function SignupForm( { onBack }) {
     event.preventDefault();
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (values.password !== values.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+    await signup(values.username, values.email, values.password);
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -38,10 +44,10 @@ function SignupForm( { onBack }) {
           flexDirection: 'column',
           alignItems: 'center',
           top: '20vh'
-          
         }}
         noValidate
         autoComplete="off"
+        onSubmit={handleSubmit}
       >
         <TextField
           fullWidth
@@ -112,9 +118,16 @@ function SignupForm( { onBack }) {
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
+          disabled={loading}
         >
           Sign Up
         </Button>
+        {error && (
+          <p style={{ color: 'red' }}>
+            {error.graphQLErrors.map((err, index) => <span key={index}>{err.message}</span>)}
+            {error.networkError && <span>{error.networkError.message}</span>}
+          </p>
+        )}
         <Button
           onClick={onBack}
           fullWidth
@@ -128,4 +141,4 @@ function SignupForm( { onBack }) {
   );
 }
 
-export default SignupForm
+export default SignupForm;

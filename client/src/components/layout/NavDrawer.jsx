@@ -18,7 +18,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import TocIcon from '@mui/icons-material/Toc';
@@ -140,7 +139,7 @@ export default function NavDrawer() {
         {isLoggedIn && (
           <ListItem disablePadding>
             <ListItemButton onClick={() => navigate('/user')}>
-              <ListItemIcon>{AccountCircleIcon}</ListItemIcon>
+              <ListItemIcon><AccountCircleIcon /></ListItemIcon>
                 <ListItemText primary={'User'} />
             </ListItemButton>
           </ListItem>
