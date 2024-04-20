@@ -1,4 +1,5 @@
 import {
+    SET_INITIAL_STATE,
     CREATE_COLLECTION,
     DELETE_COLLECTION,
     UPDATE_COLLECTION,
@@ -18,7 +19,13 @@ export default function reducer(state, action) {
                 collections : [...state.collections, {name: action.payload}]
             }
         }
+        case SET_INITIAL_STATE: {
+
+                let intialState = action.payload;
+                return {...intialState}
+        }
         case DELETE_COLLECTION: {
+            console.log(state)
             return {
                 ...state,
                 collections: [...state.collections].filter((collection) => collection.collectionName !== action.payload)
@@ -119,6 +126,9 @@ export default function reducer(state, action) {
                     
                 })
             }
+        }
+        default: {
+            return state;
         }
     }
 }
