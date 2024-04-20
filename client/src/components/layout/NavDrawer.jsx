@@ -140,7 +140,7 @@ export default function NavDrawer() {
         {isLoggedIn && (
           <ListItem disablePadding>
             <ListItemButton onClick={() => navigate('/user')}>
-              <ListItemIcon>{AccountCircleIcon}</ListItemIcon>
+              <ListItemIcon><AccountCircleIcon/></ListItemIcon>
                 <ListItemText primary={'User'} />
             </ListItemButton>
           </ListItem>
