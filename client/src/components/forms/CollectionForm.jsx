@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { Container, Box, TextField, Button, Typography } from '@mui/material';
+import { useMutation } from '@apollo/client';
+import {CREATE_COLLECTION} from "../../utils/mutations"
+
 
 export default function CollectionForm ({ mode }) {
     const [formData, setFormData] = React.useState({ name: '' });
-
+    const [addCollection, {data,error}] = useMutation(CREATE_COLLECTION);
     const handleChange = (e) => setFormData({ name: e.target.value});
 
     const handleSubmit = (e) => {
@@ -16,6 +19,11 @@ export default function CollectionForm ({ mode }) {
 
     const modeAdd = () => {
         console.log(`Collection added.`);
+        try {
+            const {data} = await addCollection({
+                variables: {collectionName: formData.name }
+            })
+        }
     }
 
     const modeUpdate = () => {

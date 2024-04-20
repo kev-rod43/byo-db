@@ -9,6 +9,7 @@ import { QUERY_ME } from '../../utils/queries';
 import { useQuery } from '@apollo/client';
 import { SET_INITIAL_STATE } from '../../utils/actions';
 import { useEffect } from 'react';
+import CollectionForm from '../forms/CollectionForm';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -73,13 +74,17 @@ export default function VerticalTabs() {
         aria-label="Vertical tabs"
         sx={{ borderRight: 1, borderColor: 'divider' }}
       >
+        <Tab label="ADD A COLLECTION" {...a11yProps(0)} />
         {state?.collections.map((collection,index) => (
-            <Tab label={collection.collection_name} {...a11yProps(index)} />
+            <Tab label={collection.collection_name} {...a11yProps(index+1)} />
             
         ))}
       </Tabs>
+      <TabPanel value={value} index={0}>
+            <CollectionForm mode="add"/>
+          </TabPanel>
       {state?.collections.map((collection,index) => (
-            <TabPanel value={value} index={index}>
+            <TabPanel value={value} index={index+1}>
             <CollectionDataGrid collection={collection}/>
           </TabPanel>
         ))}
