@@ -24,14 +24,6 @@ const resolvers = {
       }
     },
 
-    deleteUser: async (parent, {userID}) => {
-      const deletedUser = await User.findOneAndDelete(
-        {_id: userID}
-      );
-
-      return deletedUser;
-    },
-
     login: async (parent, { email, password }) => {
       try {
         const user = await User.findOne({ email });
