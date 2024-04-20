@@ -7,12 +7,12 @@ import auth from '../../utils/auth';
 
 function WelcomeBox() {
   const [view, setView] = useState('welcome'); // 'welcome', 'login', 'signup'
-  useEffect(()=>{
-    if(!auth.isTokenExpired()){
+  // useEffect(()=>{
+  //   if(!auth.isTokenExpired()){
       
-      setView('loggedIn')
-    }
-  })
+  //     setView('loggedIn')
+  //   }
+  // })
 
   const handleLoginClick = () => {
     setView('login');

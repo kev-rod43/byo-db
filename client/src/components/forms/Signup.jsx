@@ -7,6 +7,10 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
+import { useMutation } from '@apollo/client'
+import { ADD_USER } from '../../utils/mutations';
+import Auth from '../../utils/auth';
+
 
 function SignupForm( { onBack }) {
   const [values, setValues] = React.useState({
@@ -16,6 +20,40 @@ function SignupForm( { onBack }) {
     confirmPassword: '',
     showPassword: false,
   });
+
+  const [addUser, { error, data }] = useMutation(ADD_USER);
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(values)
+    // check if form has everything (as per react-bootstrap docs)
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    try {
+      const { data } = await addUser({
+        variables: {...values}
+      });
+
+      const { token, user } = data.addUser;
+      console.log(user);
+      Auth.login(token);
+    } catch (err) {
+      console.error(err);
+      setShowAlert(true);
+    }
+
+    setValues({
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      showPassword: false,
+    });
+  };
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -109,6 +147,7 @@ function SignupForm( { onBack }) {
         />
         <Button
           type="submit"
+          onClick={handleFormSubmit}
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
