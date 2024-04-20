@@ -1,4 +1,5 @@
 import { createContext, useContext, useReducer } from 'react';
+import { useQuery } from '@apollo/client';
 import reducer from './reducers';
 import { QUERY_ME } from '../utils/queries';
 

@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import {useUserContext} from '../../utils/UserContext'
 
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -32,7 +33,7 @@ function a11yProps(index) {
   };
 }
 
-export default function VerticalTabs() {
+export default function CollectionTabs() {
   const [value, setValue] = useState(0);
   const [state, dispatch] = useUserContext();
 

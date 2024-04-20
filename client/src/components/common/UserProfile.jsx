@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery } from '@apollo/client';
+import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
-import Alert from '@mui/material/Alert';
-import {QUERY_ME} from '../../utils/queries'
-
-const useUserQuery = () => {
-  const { data, loading, error } = useQuery(QUERY_ME);
-  return { data, loading, error };
-};
+import  {useUserContext}  from '../../utils/UserContext';
 
 const UserPage = () => {
   const { data, loading, error } = useUserQuery();
@@ -17,19 +11,19 @@ const UserPage = () => {
   if (loading) return <CircularProgress />;
   if (error) return <Alert severity="error">An error occurred while fetching user data!</Alert>;
 
-  const { me } = data;
+
 
   return (
     <Box sx={{ padding: 4 }}>
       <Typography variant="h4" gutterBottom>
         User Information
       </Typography>
-      <Typography variant="h6">Username: {me.username}</Typography>
-      <Typography variant="h6">Email: {me.email}</Typography>
+      <Typography variant="h6">Username: {useUserContext.username}</Typography>
+      <Typography variant="h6">Email: {useUserContext.email}</Typography>
       <Typography variant="h5" gutterBottom sx={{ mt: 2 }}>
         Collections
       </Typography>
-      {me.collections.map((collection) => (
+      {useUserContext.collections.map((collection) => (
         <Box key={collection._id} sx={{ mb: 2 }}>
           <Typography variant="subtitle1">{collection.collection_name}</Typography>
           {collection.products.map((product) => (
