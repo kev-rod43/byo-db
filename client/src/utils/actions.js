@@ -1,4 +1,11 @@
 /**
+ * SET_INITIAL_STATE
+ * -takes in an initial state object
+ * -sets the intial state
+ */
+export const SET_INITIAL_STATE = 'SET_INITIAL_STATE';
+
+/**
  * CREATE_COLLECTION
  * -takes a collection name as payload
  * -pushes a new collection object to the user context collection array
