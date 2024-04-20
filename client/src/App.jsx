@@ -11,7 +11,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
 import NavDrawer  from './components/layout/NavDrawer';
 import CustomModal from './components/common/CustomModal';
-
+import { UserProvider } from './utils/UserContext';
 
 
 
@@ -46,7 +46,9 @@ function App() {
 return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
-        <NavDrawer/>
+        <UserProvider>
+          <NavDrawer/>
+        </UserProvider>
       </ThemeProvider>
     </ApolloProvider>
   );

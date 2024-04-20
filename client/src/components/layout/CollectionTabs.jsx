@@ -4,6 +4,11 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import {useUserContext} from '../../utils/UserContext'
+import CollectionDataGrid from './CollectionDataGrid'
+import { QUERY_ME } from '../../utils/queries';
+import { useQuery } from '@apollo/client';
+import { SET_INITIAL_STATE } from '../../utils/actions';
+import { useEffect } from 'react';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -33,12 +38,28 @@ function a11yProps(index) {
 }
 
 export default function VerticalTabs() {
+  const { loading, data } = useQuery(QUERY_ME);
   const [value, setValue] = useState(0);
   const [state, dispatch] = useUserContext();
+  useEffect( () => {
+    if (!loading){
+       dispatch({
+        type: SET_INITIAL_STATE,
+        payload : data.me
+      })}
+
+    },[loading])
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  
+  if (loading) {
+    return <h2>LOADING...</h2>;
+  }
+  if (!state.username){
+    return <h2>LOADING...</h2>
+  }
 
   return (
     <Box
@@ -52,14 +73,14 @@ export default function VerticalTabs() {
         aria-label="Vertical tabs"
         sx={{ borderRight: 1, borderColor: 'divider' }}
       >
-        {state.collections.map((collection,index) => (
-            <Tab label={collection.name} {...a11yProps(index)} />
+        {state?.collections.map((collection,index) => (
+            <Tab label={collection.collection_name} {...a11yProps(index)} />
             
         ))}
       </Tabs>
-      {state.collections.map((collection,index) => (
+      {state?.collections.map((collection,index) => (
             <TabPanel value={value} index={index}>
-            {/* TO DO: RENDER THE COLLECTION */}
+            <CollectionDataGrid collection={collection}/>
           </TabPanel>
         ))}
     </Box>
