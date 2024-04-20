@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
+import { useEffect } from 'react';
 import  LoginForm from '../forms/Login'; 
 import SignupForm from '../forms/Signup'; 
+import auth from '../../utils/auth';
 
 function WelcomeBox() {
   const [view, setView] = useState('welcome'); // 'welcome', 'login', 'signup'
+  // useEffect(()=>{
+  //   if(!auth.isTokenExpired()){
+      
+  //     setView('loggedIn')
+  //   }
+  // })
 
   const handleLoginClick = () => {
     setView('login');
@@ -40,6 +48,14 @@ function WelcomeBox() {
         transition: 'all 0.3s',  // Smooth transition for resizing
       }}
     >
+      {view === "loggedIn" && (
+         <>
+         <Typography variant="h5" component="h1" gutterBottom>
+           Welcome!
+         </Typography>
+
+       </>
+      )}
       {view === 'welcome' && (
         <>
           <Typography variant="h5" component="h1" gutterBottom>

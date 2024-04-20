@@ -4,12 +4,10 @@ import UserProfile from "../components/common/UserProfile";
 
 
 const UserPage = () => {
-return(<>
-    
-    
-    <UserPage/>
-
-</>)
+return(
+    <WelcomeBox></WelcomeBox>
+)
 };
 
+//
 export default UserPage;
