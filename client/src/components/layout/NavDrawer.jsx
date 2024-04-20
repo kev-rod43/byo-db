@@ -23,7 +23,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import TocIcon from '@mui/icons-material/Toc';
 import HomeIcon from '@mui/icons-material/Home'; 
-
+import AuthService from '../../utils/auth'
 
 
 
@@ -31,7 +31,6 @@ const drawerWidth = 240;
 
 const pages = [
   { name: 'Home', icon: <HomeIcon />, route: '/' },
-  { name: 'User', icon: <AccountCircleIcon />, route: '/user' },
   { name: 'Collections', icon: <TocIcon />, route: '/collections' },
   { name: 'Charts', icon: <ShowChartIcon />, route: '/charts' }
   
@@ -82,10 +81,13 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
+// Component return
+
 export default function NavDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
+  const isLoggedIn = AuthService.loggedIn();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -135,6 +137,14 @@ export default function NavDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
+        {isLoggedIn && (
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => navigate('/user')}>
+              <ListItemIcon>{AccountCircleIcon}</ListItemIcon>
+                <ListItemText primary={'User'} />
+            </ListItemButton>
+          </ListItem>
+        )}
           {pages.map((page) => (
             <ListItem key={page.name} disablePadding>
               <ListItemButton onClick={() => navigate(page.route)}>
