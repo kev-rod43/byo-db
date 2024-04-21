@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 
-const TagModel = require("./Tag");
 const shippingSchema = require('./Shipping');
 
 const productSchema = new Schema(

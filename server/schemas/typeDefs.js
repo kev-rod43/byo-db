@@ -57,6 +57,28 @@ const typeDefs = `
         products: [Product]
     }
 
+    input ProductData {
+        product_name: String!
+        stock: Int!
+        description: String
+        purchased: Float
+        price: Float
+        condition: String
+        shipping_properties: ShippingData
+        tag: [TagData]
+    }
+
+    input TagData {
+        tag_name: String!
+    }
+
+    input ShippingData {
+        height: Float
+        width: Float
+        depth: Float
+        weight: Float
+    }
+
     type Auth {
         token: ID!
         user: User
@@ -64,6 +86,9 @@ const typeDefs = `
 
     type Query {
         me: User
+        collections: [Collection]
+        collection(collection_name: String!): Collection
+        
     }
 
     type Mutation {

@@ -1,30 +1,39 @@
 import * as React from 'react';
 import { Container, Box, TextField, Button, Typography } from '@mui/material';
 import { useMutation } from '@apollo/client';
-import {CREATE_COLLECTION} from "../../utils/mutations"
+import { CREATE_COLLECTION } from "../../utils/mutations"
+import { useUserContext } from '../../utils/UserContext';
 
 
-export default function CollectionForm ({ mode }) {
+export default function CollectionForm({ mode }) {
     const [formData, setFormData] = React.useState({ name: '' });
-    const [addCollection, {data,error}] = useMutation(CREATE_COLLECTION);
-    const handleChange = (e) => setFormData({ name: e.target.value});
+    const [addCollection, { data, error }] = useMutation(CREATE_COLLECTION);
+    const handleChange = (e) => setFormData({ name: e.target.value });
 
     const handleSubmit = (e) => {
         e.preventDefault();
         mode === 'add'
-        ? modeAdd()     // replace with addCollection mutation 
-        : modeUpdate()  // replace with updateCollectin mutation
+            ? modeAdd()     // replace with addCollection mutation 
+            : modeUpdate()  // replace with updateCollectin mutation
 
     }
 
-    const modeAdd = () => {
+    const [state, dispatch] = useUserContext();
+
+    const modeAdd = async () => {
         console.log(`Collection added.`);
         try {
-            const {data} = await addCollection({
-                variables: {collectionName: formData.name }
-            })
+            const { data } = await addCollection({
+                variables: { collectionName: formData.name }
+            });
+            dispatch({
+                type: "CREATE_COLLECTION",
+                payload: formData.name
+            });
+        } catch (err) {
+            console.log(err);
         }
-    }
+    };
 
     const modeUpdate = () => {
         console.log(`Collection updated.`);
@@ -47,12 +56,12 @@ export default function CollectionForm ({ mode }) {
                 <form style={styles} onSubmit={handleSubmit}>
                     <Typography sx={styles.formElements}>
                         {
-                            (mode === 'add') 
-                            ? `Enter a name for the collection`
-                            : `What would you like to rename the database to?`
+                            (mode === 'add')
+                                ? `Enter a name for the collection`
+                                : `What would you like to rename the database to?`
                         }
                     </Typography>
-                    <TextField sx={styles.formElements} onChange={handleChange} placeholder='Books'/><br/>
+                    <TextField sx={styles.formElements} onChange={handleChange} placeholder='Books' /><br />
                     <Button sx={styles.formElements} type='submit' disabled={formData.name.trim() == ''}>Create</Button>
                 </form>
             </Box>

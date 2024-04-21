@@ -62,7 +62,6 @@ export const UPDATE_COLLECTION = gql`
 export const CREATE_COLLECTION = gql`
   mutation createCollection($collectionName: String!) {
     createCollection(collectionName: $collectionName) {
-      user {
         _id
         username
         email
@@ -88,7 +87,6 @@ export const CREATE_COLLECTION = gql`
             }
           }
         }
-      }
     }
   }
 `;
@@ -96,7 +94,6 @@ export const CREATE_COLLECTION = gql`
 export const DELETE_COLLECTION = gql`
   mutation deleteCollection($collectionName: String!) {
     deleteCollection(collectionName: $collectionName) {
-      user {
         _id
         username
         email
@@ -122,7 +119,6 @@ export const DELETE_COLLECTION = gql`
             }
           }
         }
-      }
     }
   }
 `;
@@ -130,7 +126,6 @@ export const DELETE_COLLECTION = gql`
 export const CREATE_PRODUCT = gql`
   mutation createProduct($collectionName: String!, $productInput: ProductInput!) {
     createProduct(collectionName: $collectionName, productInput: $productInput) {
-      user {
         _id
         username
         email
@@ -156,7 +151,6 @@ export const CREATE_PRODUCT = gql`
             }
           }
         }
-      }
     }
   }
 `; 
@@ -164,7 +158,6 @@ export const CREATE_PRODUCT = gql`
 export const DELETE_PRODUCT = gql`
   mutation deleteProduct($collectionName: String!, $productId: ID!) {
     deleteProduct(collectionName: $collectionName, productId: $productId) {
-      user {
         _id
         username
         email
@@ -190,7 +183,6 @@ export const DELETE_PRODUCT = gql`
             }
           }
         }
-      }
     }
   }
 `;
@@ -198,7 +190,6 @@ export const DELETE_PRODUCT = gql`
 export const UPDATE_PRODUCT = gql`
  mutation updateProduct($collectionName: String!, $updatedProductObject: ProductInput!, $productId: ID!) {
   updateProduct(collectionName: $collectionName, updatedProductObject: $updatedProductObject, productId: $productId) {
-    user {
       _id
       username
       email
@@ -225,6 +216,5 @@ export const UPDATE_PRODUCT = gql`
         }
       }
     }
-    }
  }
-`;
+`
