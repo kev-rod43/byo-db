@@ -35,7 +35,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>  
+      <ThemeProvider theme={theme}>
           <UserProvider>
             <NavDrawer />
           </UserProvider>

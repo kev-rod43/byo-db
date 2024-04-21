@@ -18,8 +18,8 @@ const UserPage = () => {
       <Typography variant="h4" gutterBottom>
         User Information
       </Typography>
-      <Typography variant="h6">Username: {useUserContext.username}</Typography>
-      <Typography variant="h6">Email: {useUserContext.email}</Typography>
+      <Typography variant="h6">Username: {me.username}</Typography>
+      <Typography variant="h6">Email: {me.email}</Typography>
       <Typography variant="h5" gutterBottom sx={{ mt: 2 }}>
         Collections
       </Typography>
