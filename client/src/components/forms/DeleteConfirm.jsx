@@ -2,17 +2,17 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useMutation } from '@apollo/client';
+import { useUserContext } from '../../utils/UserContext';
+
 
 
 import { DELETE_PRODUCT } from '../../utils/mutations';
 
 export default function AlertDialog({ modalState, productToDelete, collectionName }) {
     const [deleteProduct, { data, error }] = useMutation(DELETE_PRODUCT);
-
+    const [state, dispatch] = useUserContext()
     const handleClose = () => {
         setOpen(false);
     };
@@ -23,7 +23,14 @@ export default function AlertDialog({ modalState, productToDelete, collectionNam
             const { data } = await deleteProduct({
                 variables: { collectionName: collectionName, productId: productToDelete }
             })
-        } catch {
+            if(!error){
+                dispatch({
+                    type: "SET_INITIAL_STATE",
+                    payload:  data.deleteProduct 
+                })
+            }
+        } catch (err){
+            console.log(err)
 
         }
         handleClose();
@@ -44,7 +51,7 @@ export default function AlertDialog({ modalState, productToDelete, collectionNam
                 </DialogTitle>
                 <DialogActions>
                     <Button onClick={handleClose}>No</Button>
-                    <Button onClick={handleClose} autoFocus>
+                    <Button onClick={handleYes} autoFocus>
                         Yes
                     </Button>
                 </DialogActions>

@@ -30,7 +30,7 @@ export default function CollectionDataGrid({ collection }) {
     console.log("clicked edit")
   };
 
-  const [productToDelete, setProductToDelete] = react.useState("");
+  const [productToDelete, setProductToDelete] = React.useState("");
   const [open, setOpen] = React.useState(false);
 
   const handleDeleteClick = (id) => () => {

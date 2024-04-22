@@ -67,6 +67,7 @@ export default function VerticalTabs() {
       sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224 }}
     >
       <Tabs
+        key=""
         orientation="vertical"
         variant="scrollable"
         value={value}
@@ -76,7 +77,7 @@ export default function VerticalTabs() {
       >
         <Tab label="ADD A COLLECTION" {...a11yProps(0)} />
         {state?.collections.map((collection,index) => (
-            <Tab label={collection.collection_name} {...a11yProps(index+1)} />
+            <Tab key={index + "collection"}label={collection.collection_name} {...a11yProps(index+1)} />
             
         ))}
       </Tabs>
@@ -84,8 +85,8 @@ export default function VerticalTabs() {
             <CollectionForm mode="add"/>
           </TabPanel>
       {state?.collections.map((collection,index) => (
-            <TabPanel value={value} index={index+1}>
-            <CollectionDataGrid collection={collection}/>
+            <TabPanel key={index + "TabPanel"}value={value} index={index+1}>
+            <CollectionDataGrid key={index + "CollectionDataGrid"} collection={collection}/>
           </TabPanel>
         ))}
     </Box>
