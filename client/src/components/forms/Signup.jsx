@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import { useMutation } from '@apollo/client'
 import { ADD_USER } from '../../utils/mutations';
-import Auth from '../../utils/auth';
+import AuthService from '../../utils/auth';
 
 
 function SignupForm( { onBack }) {
@@ -25,8 +25,6 @@ function SignupForm( { onBack }) {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(values)
-    // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -37,13 +35,10 @@ function SignupForm( { onBack }) {
       const { data } = await addUser({
         variables: {...values}
       });
-
       const { token, user } = data.addUser;
-      console.log(user);
-      Auth.login(token);
+      AuthService.login(token);
     } catch (err) {
       console.error(err);
-      setShowAlert(true);
     }
 
     setValues({

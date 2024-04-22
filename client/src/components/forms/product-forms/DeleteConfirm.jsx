@@ -4,13 +4,10 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useMutation } from '@apollo/client';
-import { useUserContext } from '../../utils/UserContext';
+import { useUserContext } from '../../../utils/UserContext';
+import { DELETE_PRODUCT } from '../../../utils/mutations';
 
-
-
-import { DELETE_PRODUCT } from '../../utils/mutations';
-
-export default function AlertDialog({ modalState, productToDelete, collectionName }) {
+export default function ProductDeleteConfirm({ deleteProductModalState, productToDelete, collectionName }) {
     const [deleteProduct, { data, error }] = useMutation(DELETE_PRODUCT);
     const [state, dispatch] = useUserContext()
     const handleClose = () => {
@@ -36,10 +33,9 @@ export default function AlertDialog({ modalState, productToDelete, collectionNam
         handleClose();
     }
 
-    const [open, setOpen] = modalState;
+    const [open, setOpen] = deleteProductModalState;
 
     return (
-        <React.Fragment>
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -56,6 +52,5 @@ export default function AlertDialog({ modalState, productToDelete, collectionNam
                     </Button>
                 </DialogActions>
             </Dialog>
-        </React.Fragment>
     );
 }
