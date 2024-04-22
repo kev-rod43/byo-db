@@ -3,7 +3,8 @@ import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
-import  {useUserContext}  from '../../utils/UserContext';
+// import  {useUserContext}  from '../../utils/UserContext';
+import {useUserQuery} from '../../hooks/getUser'
 
 const UserPage = () => {
   const { data, loading, error } = useUserQuery();
@@ -11,7 +12,7 @@ const UserPage = () => {
   if (loading) return <CircularProgress />;
   if (error) return <Alert severity="error">An error occurred while fetching user data!</Alert>;
 
-
+const me = data;
 
   return (
     <Box sx={{ padding: 4 }}>
@@ -23,7 +24,7 @@ const UserPage = () => {
       <Typography variant="h5" gutterBottom sx={{ mt: 2 }}>
         Collections
       </Typography>
-      {useUserContext.collections.map((collection) => (
+      {me.collections.map((collection) => (
         <Box key={collection._id} sx={{ mb: 2 }}>
           <Typography variant="subtitle1">{collection.collection_name}</Typography>
           {collection.products.map((product) => (

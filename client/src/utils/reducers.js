@@ -120,5 +120,14 @@ export default function reducer(state, action) {
                 })
             }
         }
+        // User Data 
+        case 'SET_LOADING':
+            return { ...state, isLoading: true };
+        case 'SET_ERROR':
+            return { ...state, isLoading: false, error: action.payload };
+        case 'SET_USER':
+            return { ...state, isLoading: false, user: action.payload };
+        default:
+            return state;
     }
 }

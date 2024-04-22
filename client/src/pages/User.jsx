@@ -7,7 +7,7 @@ const UserPage = () => {
 return(<>
     
     
-    <UserProfile/>
+    {/* <UserProfile/> */}
 
 </>)
 };

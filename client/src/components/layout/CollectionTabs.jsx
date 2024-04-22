@@ -3,8 +3,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import {useUserContext} from '../../utils/UserContext'
-
+import {useUserContext} from '../../utils/UserContext';
+import {useUserQuery} from '../../hooks/getUser';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
