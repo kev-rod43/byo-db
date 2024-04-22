@@ -39,7 +39,7 @@ export default function DeleteCollection({ name, mode, id }) {
     <Container sx={{ border: "2px black solid" }}>
       <Box>
         <Typography>{`Are you sure you want to delete ${name}`}</Typography>
-        <Button disabled={!(elapsed > 2)}>Yes</Button>
+        <Button disabled={!(elapsed > 2) } onClick={handleDelete}>Yes</Button>
         <Button>No</Button>
       </Box>
     </Container>
