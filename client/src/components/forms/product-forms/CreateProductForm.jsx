@@ -103,6 +103,7 @@ export default function CreateProductForm({ createProductModalState, collectionN
           name="acquisitionCost"
           label="Acquisition Cost"
           type="number"
+          inputProps={{step: "0.01"}}
           variant="standard"
           sx={{
             width: "49%",
@@ -119,6 +120,7 @@ export default function CreateProductForm({ createProductModalState, collectionN
           name="price"
           label="Selling Price"
           type="number"
+          inputProps={{step: "0.01"}}
           variant="standard"
           sx={{ width: "49%" }}
           InputProps={{
@@ -140,6 +142,7 @@ export default function CreateProductForm({ createProductModalState, collectionN
           name="height"
           label="Product Height"
           type="number"
+          inputProps={{step: "0.01"}}
           variant="standard"
           sx={{
             width: "49%",
@@ -156,6 +159,7 @@ export default function CreateProductForm({ createProductModalState, collectionN
           name="width"
           label="Product Width"
           type="number"
+          inputProps={{step: "0.01"}}
           variant="standard"
           sx={{ width: "49%" }}
           InputProps={{
@@ -168,6 +172,7 @@ export default function CreateProductForm({ createProductModalState, collectionN
           name="depth"
           label="Product Depth"
           type="number"
+          inputProps={{step: "0.01"}}
           variant="standard"
           sx={{
             width: "49%",
@@ -183,6 +188,7 @@ export default function CreateProductForm({ createProductModalState, collectionN
           name="weight"
           label="Product Weight"
           type="number"
+          inputProps={{step: "0.01"}}
           variant="standard"
           sx={{ width: "49%" }}
           InputProps={{

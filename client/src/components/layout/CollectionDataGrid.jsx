@@ -83,7 +83,7 @@ export default function CollectionDataGrid({ collection }) {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
-      width: 100,
+      width: "100",
       cellClassName: 'actions',
       getActions: ({ id }) => {
         return [
@@ -105,7 +105,7 @@ export default function CollectionDataGrid({ collection }) {
         ];
       },
     },
-    { field: "_id", headerName: "_id", type: "string" },
+    { field: "_id", headerName: "_id", type: "string"},
     { field: "productName", headerName: "Name", type: "string" },
     { field: "stock", headerName: "Stock", type: "number" },
     { field: "description", headerName: "Description", type: "string" },
@@ -136,6 +136,7 @@ export default function CollectionDataGrid({ collection }) {
       <DataGrid
         rows={flattenedData}
         columns={columnDefs}
+        autosizeOnMount
         columnVisibilityModel={columnVisibilityModel}
         onColumnVisibilityModelChange={(newModel) =>
           setColumnVisibilityModel(newModel)
