@@ -12,7 +12,7 @@ import { ADD_USER } from '../../utils/mutations';
 import AuthService from '../../utils/auth';
 
 
-function SignupForm( { onBack }) {
+function SignupForm({ onBack }) {
   const [values, setValues] = React.useState({
     username: '',
     email: '',
@@ -62,6 +62,15 @@ function SignupForm( { onBack }) {
     event.preventDefault();
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (values.password !== values.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+    await signup(values.username, values.email, values.password);
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -71,10 +80,10 @@ function SignupForm( { onBack }) {
           flexDirection: 'column',
           alignItems: 'center',
           top: '20vh'
-          
         }}
         noValidate
         autoComplete="off"
+        onSubmit={handleSubmit}
       >
         <TextField
           fullWidth
@@ -149,6 +158,12 @@ function SignupForm( { onBack }) {
         >
           Sign Up
         </Button>
+        {error && (
+          <p style={{ color: 'red' }}>
+            {error.graphQLErrors.map((err, index) => <span key={index}>{err.message}</span>)}
+            {error.networkError && <span>{error.networkError.message}</span>}
+          </p>
+        )}
         <Button
           onClick={onBack}
           fullWidth
@@ -162,4 +177,4 @@ function SignupForm( { onBack }) {
   );
 }
 
-export default SignupForm
+export default SignupForm;
