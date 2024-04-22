@@ -155,7 +155,6 @@ function SignupForm({ onBack }) {
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
-          disabled={loading}
         >
           Sign Up
         </Button>
