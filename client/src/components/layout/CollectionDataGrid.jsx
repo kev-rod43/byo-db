@@ -167,7 +167,7 @@ export default function CollectionDataGrid({ collection }) {
     <DeleteCollectionForm 
       key='DeleteCollectionForm'
       modalState={[openDeleteCollection, setOpenDeleteCollection]}
-      collectionName={ collection.collection_name }/>
+      collectionName={ collection.collection_name }/>,
 
     <UpdateProductForm
       key="UpdateProductForm"
