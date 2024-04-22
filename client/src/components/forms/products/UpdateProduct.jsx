@@ -12,7 +12,7 @@ import {
   Button,
 } from "@mui/material";
 
-export default function ProductForm() {
+export default function UpdateProductForm({ item }) {
   const styles = {
     header: {
       fontSize: "2rem",
@@ -31,24 +31,27 @@ export default function ProductForm() {
   };
 
   const [formData, setFormData] = React.useState({
-    product_name: "",
-    stock: 0,
-    description: "",
-    purchased: 0,
-    price: 0.0,
-    condition: "",
-    height: 0,
-    width: 0,
-    depth: 0,
-    weight: 0,
+    product_name: item.product_name !== "" ? item.product_name : "",
+    stock: item.stock !== "" ? item.stock : "",
+    description: item.description !== "" ? item.description : "",
+    purchased: item.purchased !== "" ? item.purchased : "",
+    price: item.price !== "" ? item.price : "",
+    condition: item.condition !== "" ? item.condition : "",
+    height: item.height !== "" ? item.height : "",
+    width: item.width !== "" ? item.width : "",
+    depth: item.depth !== "" ? item.depth : "",
+    weight: item.weight !== "" ? item.weight : "",
   });
 
   const [checks, setCheckState] = React.useState({
-    description: false,
-    purchased: false,
-    price: false,
-    condition: false,
-    shipping_properties: false,
+    description: item.description !== "" ? true : false,
+    purchased: item.purchased !== "" ? true : false,
+    price: item.price !== 0 ? true : false,
+    condition: item.condition !== "" ? true : false,
+    shipping_properties:
+      (item.height || item.width || item.depth || item.weight) !== 0
+        ? true
+        : false,
   });
 
   const { description, purchased, price, condition, shipping_properties } =
@@ -62,9 +65,8 @@ export default function ProductForm() {
     return setCheckState({ ...checks, [prop]: event.target.checked });
   };
 
-  // TODO: implement database functionality
   const handleSubmit = () => {
-    console.log(formData);
+    // TODO: implement database functionality
     setFormData({
       product_name: "",
       stock: 0,
@@ -87,6 +89,7 @@ export default function ProductForm() {
         </Typography>
         <FormGroup>
           <TextField
+            value={formData.product_name}
             id="outlined-basic"
             variant="outlined"
             label="Product Name"
@@ -95,6 +98,7 @@ export default function ProductForm() {
             style={styles.formFields}
           />
           <TextField
+            value={formData.stock}
             id="outlined-basic"
             variant="outlined"
             label="Stock"
@@ -113,6 +117,7 @@ export default function ProductForm() {
           ></FormControlLabel>
           {checks.description === true ? (
             <TextField
+              value={formData.description}
               id="outlined-basic"
               variant="outlined"
               label="Description"
@@ -133,6 +138,7 @@ export default function ProductForm() {
           ></FormControlLabel>
           {checks.purchased === true ? (
             <TextField
+              value={formData.purchased}
               id="outlined-basic"
               variant="outlined"
               label="Purchase Price"
@@ -150,6 +156,7 @@ export default function ProductForm() {
           ></FormControlLabel>
           {checks.price === true ? (
             <TextField
+              value={formData.price}
               id="outlined-basic"
               variant="outlined"
               label="Price"
@@ -195,6 +202,7 @@ export default function ProductForm() {
           {checks.shipping_properties === true ? (
             <div style={styles.shipping_details}>
               <TextField
+                value={formData.height}
                 id="outlined-basic"
                 variant="outlined"
                 label="Height"
@@ -202,6 +210,7 @@ export default function ProductForm() {
                 style={styles.formFields}
               />
               <TextField
+                value={formData.width}
                 id="outlined-basic"
                 variant="outlined"
                 label="Width"
@@ -209,6 +218,7 @@ export default function ProductForm() {
                 style={styles.formFields}
               />
               <TextField
+                value={formData.depth}
                 id="outlined-basic"
                 variant="outlined"
                 label="Depth"
@@ -216,6 +226,7 @@ export default function ProductForm() {
                 style={styles.formFields}
               />
               <TextField
+                value={formData.weight}
                 id="outlined-basic"
                 variant="outlined"
                 label="Weight"
