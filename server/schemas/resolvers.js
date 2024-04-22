@@ -14,7 +14,7 @@ const resolvers = {
   Mutation: {
     addUser: async (parent, args) => {
       try {
-        const user = User.create(args);
+        const user = await User.create(args);
         const token = signToken(user);
 
         return { token, user };
@@ -23,6 +23,7 @@ const resolvers = {
         ;
       }
     },
+
     login: async (parent, { email, password }) => {
       try {
         const user = await User.findOne({ email });
@@ -94,7 +95,7 @@ const resolvers = {
           { _id: context.user._id, 'collections.collection_name': collectionName },
           { $pull: { 'collections.$.products': { _id: productId } } },
           { new: true }
-        );
+        );  
         return updatedUser;
       }
       throw AuthenticationError

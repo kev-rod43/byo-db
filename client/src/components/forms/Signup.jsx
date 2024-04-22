@@ -1,7 +1,16 @@
 import * as React from 'react';
-import { Box, TextField, IconButton, InputAdornment, Container, Button } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import useSignup from '../../hooks/useSignup';  // Adjust the import path as necessary
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import { useMutation } from '@apollo/client'
+import { ADD_USER } from '../../utils/mutations';
+import AuthService from '../../utils/auth';
+
 
 function SignupForm({ onBack }) {
   const [values, setValues] = React.useState({
@@ -12,7 +21,34 @@ function SignupForm({ onBack }) {
     showPassword: false,
   });
 
-  const { signup, loading, error } = useSignup();
+  const [addUser, { error, data }] = useMutation(ADD_USER);
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    try {
+      const { data } = await addUser({
+        variables: {...values}
+      });
+      const { token, user } = data.addUser;
+      AuthService.login(token);
+    } catch (err) {
+      console.error(err);
+    }
+
+    setValues({
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      showPassword: false,
+    });
+  };
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -115,6 +151,7 @@ function SignupForm({ onBack }) {
         />
         <Button
           type="submit"
+          onClick={handleFormSubmit}
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}

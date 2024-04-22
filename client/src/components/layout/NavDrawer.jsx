@@ -21,7 +21,8 @@ import ListItemText from '@mui/material/ListItemText';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import TocIcon from '@mui/icons-material/Toc';
-import HomeIcon from '@mui/icons-material/Home'; 
+import HomeIcon from '@mui/icons-material/Home';
+import LogoutIcon from '@mui/icons-material/Logout'; 
 import AuthService from '../../utils/auth'
 
 
@@ -139,19 +140,27 @@ export default function NavDrawer() {
         {isLoggedIn && (
           <ListItem disablePadding>
             <ListItemButton onClick={() => navigate('/user')}>
-              <ListItemIcon><AccountCircleIcon /></ListItemIcon>
+              <ListItemIcon><AccountCircleIcon/></ListItemIcon>
                 <ListItemText primary={'User'} />
             </ListItemButton>
           </ListItem>
         )}
           {pages.map((page) => (
-            <ListItem key={page.name} disablePadding>
+            <ListItem key={page.name} disablePadding sx={isLoggedIn? {}:{display: "none"}}>
               <ListItemButton onClick={() => navigate(page.route)}>
                 <ListItemIcon>{page.icon}</ListItemIcon>
                 <ListItemText primary={page.name} />
               </ListItemButton>
             </ListItem>
           ))}
+          {isLoggedIn && (
+        <ListItem key="logOut" disablePadding>
+        <ListItemButton onClick={() => AuthService.logout()}>
+          <ListItemIcon><LogoutIcon/></ListItemIcon>
+          <ListItemText primary={"Sign Out"} />
+        </ListItemButton>
+      </ListItem>
+      )}
         </List>
       </Drawer>
 

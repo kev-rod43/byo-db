@@ -8,6 +8,9 @@ import NavDrawer  from './components/layout/NavDrawer';
 import CustomModal from './components/common/CustomModal';
 import { UserProvider } from './utils/UserContext';
 
+
+
+import BoxTest from "./components/common/Welcome"
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -36,9 +39,9 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
-          <UserProvider>
-            <NavDrawer />
-          </UserProvider>
+        <UserProvider>
+          <NavDrawer/>
+        </UserProvider>
       </ThemeProvider>
     </ApolloProvider>
   );
