@@ -1,11 +1,11 @@
-import { createContext, useContext, useReducer, useEffect } from 'react';
-import { useQuery } from '@apollo/client';
+import { createContext, useContext, useReducer } from 'react';
 import reducer from './reducers';
 // Initialize new context for the user
 const UserContext = createContext();
 
 export const useUserContext = () => useContext(UserContext);
 
+// The provider is responsible for creating our state, updating the state, and persisting values to the children
 export const UserProvider = ({ children }) => {
       // Initialize `useReducer` hook. Returns state and a dispatch function. Accepts arguments of our reducer and initial state
     const [state, dispatch] = useReducer(reducer, {});
