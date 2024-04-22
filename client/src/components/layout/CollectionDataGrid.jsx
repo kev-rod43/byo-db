@@ -12,6 +12,7 @@ import {
   GridToolbarContainer,
   GridActionsCellItem,
 } from '@mui/x-data-grid';
+import DeleteCollectionForm from '../forms/DeleteCollection';
 
 export default function CollectionDataGrid({ collection }) {
 
@@ -34,11 +35,15 @@ export default function CollectionDataGrid({ collection }) {
 
   const [productToDelete, setProductToDelete] = React.useState("");
   const [openDeleteProduct, setOpenDeleteProduct] = React.useState(false);
+  const [openDeleteCollection, setOpenDeleteCollection] = React.useState(false);
 
   const handleDeleteClick = (id) => () => {
     setProductToDelete(flattenedData[id]._id);
     setOpenDeleteProduct(true);
 
+  }
+  const handleDeleteCollection = () => {
+    setOpenDeleteCollection(true);
   }
 
   const [openCreateProduct, setOpenCreateProduct] = React.useState(false);
@@ -47,6 +52,7 @@ export default function CollectionDataGrid({ collection }) {
     const handleAddProduct =() => {
       setOpenCreateProduct(true);
     };
+
 
     return (
       <GridToolbarContainer>
@@ -82,12 +88,14 @@ export default function CollectionDataGrid({ collection }) {
       getActions: ({ id }) => {
         return [
           <GridActionsCellItem
+            key='DeleteProduct'
             icon={<DeleteIcon />}
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="inherit"
           />,
           <GridActionsCellItem
+            key='EditProduct'
             icon={<EditIcon />}
             label="Edit"
             className="textPrimary"
@@ -112,6 +120,7 @@ export default function CollectionDataGrid({ collection }) {
 
   return ([
     <Box
+      key='CollectionDataGrid'
       sx={{
         height: 500,
         minWidth: '500px',
@@ -137,6 +146,7 @@ export default function CollectionDataGrid({ collection }) {
       />
     </Box>,
     <Button
+      onClick={handleDeleteCollection}
       key="DeleteCollectionBtn"
       size="small"
       color="error"
@@ -153,11 +163,18 @@ export default function CollectionDataGrid({ collection }) {
       collectionName={collection.collection_name}
       createProductModalState={[openCreateProduct, setOpenCreateProduct]}
     />,
+
+    <DeleteCollectionForm 
+      key='DeleteCollectionForm'
+      modalState={[openDeleteCollection, setOpenDeleteCollection]}
+      collectionName={ collection.collection_name }/>,
+
     <UpdateProductForm
       key="UpdateProductForm"
       collectionName={collection.collection_name}
       updateProductModalState={[openUpdateProduct, setOpenUpdateProduct]}
-      product={productToUpdate}
-    />
+      product={productToUpdate}/>
+
+
   ]);
 }
