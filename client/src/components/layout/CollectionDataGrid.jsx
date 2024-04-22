@@ -21,6 +21,7 @@ export default function CollectionDataGrid({ collection }) {
     height: false,
     width: false,
     depth: false,
+    _id: false,
   });
 
   const handleEditClick = () => () => {
@@ -57,6 +58,7 @@ export default function CollectionDataGrid({ collection }) {
   const flattenedData = [
     ...collection.products.map((product, index) => ({
       id: index,
+      _id: product._id,
       productName: product.product_name,
       stock: product.stock,
       description: product.description,
@@ -92,6 +94,7 @@ export default function CollectionDataGrid({ collection }) {
         ];
       },
     },
+    { field: "_id", headerName: "_id", type: "string" },
     { field: "productName", headerName: "Name", type: "string" },
     { field: "stock", headerName: "Stock", type: "number" },
     { field: "description", headerName: "Description", type: "string" },
@@ -105,7 +108,7 @@ export default function CollectionDataGrid({ collection }) {
   ]
 
   return (
-    <AlertDialog>
+    //<AlertDialog>
     <Box
       sx={{
         height: 500,
