@@ -7,11 +7,13 @@ import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const UserPage = () => {
   const { loading, data, error } = useQuery(QUERY_ME);
@@ -30,40 +32,44 @@ const UserPage = () => {
   if (error) return <Alert severity="error">An error occurred while fetching user data!</Alert>;
   if (!state.username) return <h2>Loading user data...</h2>;
 
-  const { username, email, collections } = state;
-
   return (
-    <Box sx={{ padding: 4 }}>
-      <Typography variant="h4" gutterBottom>
+    <Box sx={{ padding: 4, borderRadius: '16px',
+    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)', }}>
+      <Typography variant="h2" gutterBottom>
         User Information
       </Typography>
-      <Typography variant="h6">Username: {username}</Typography>
-      <Typography variant="h6">Email: {email}</Typography>
-      <Typography variant="h5" gutterBottom sx={{ mt: 2 }}>
-        Collections
-      </Typography>
-      {collections.map((collection) => (
-        <Card key={collection._id} sx={{ mb: 2, minWidth: 275 }}>
-          <CardContent>
-            <Typography variant="h6" component="div">
-              {collection.collection_name}
-            </Typography>
-            {collection.products.map((product) => (
-              <Box key={product._id} sx={{ ml: 2, mt: 2 }}>
-                <Typography variant="body1">Product Name: {product.product_name}</Typography>
-                <Typography variant="body2">Stock: {product.stock}</Typography>
-                <Typography variant="body2">Description: {product.description}</Typography>
-                <Typography variant="body2">Price: ${product.price}</Typography>
-              </Box>
+      <Typography variant="h3">Username: {state.username}</Typography>
+      <Typography variant="h3">Email: {state.email}</Typography>
+
+      <TableContainer component={Paper} 
+        sx={{ 
+          marginTop: 4,
+          borderRadius: '16px',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)', 
+          }}>
+        <Table aria-label="collections table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Collection Name</TableCell>
+              <TableCell align="right">Number of Products</TableCell>
+              <TableCell align="right">Total Value ($)</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {state.collections.map((collection) => (
+              <TableRow key={collection._id}>
+                <TableCell component="th" scope="row">
+                  {collection.collection_name}
+                </TableCell>
+                <TableCell align="right">{collection.products.length}</TableCell>
+                <TableCell align="right">
+                  {collection.products.reduce((acc, product) => acc + product.price, 0).toFixed(2)}
+                </TableCell>
+              </TableRow>
             ))}
-          </CardContent>
-        </Card>
-      ))}
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-        <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={() => { /* Implement navigation to add collection */ }}>
-          Add Collection
-        </Button>
-      </Box>
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Box>
   );
 };
