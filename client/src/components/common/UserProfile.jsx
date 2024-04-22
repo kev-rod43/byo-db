@@ -1,30 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useQuery } from '@apollo/client';
+import { QUERY_ME } from '../../utils/queries';
+import { useUserContext } from '../../utils/UserContext';
+import { SET_INITIAL_STATE } from '../../utils/actions';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
-// import  {useUserContext}  from '../../utils/UserContext';
-import {useUserQuery} from '../../hooks/getUser'
 
 const UserPage = () => {
-  const { data, loading, error } = useUserQuery();
+  const { loading, data, error } = useQuery(QUERY_ME);
+  const [state, dispatch] = useUserContext();
+
+  useEffect(() => {
+    if (!loading && data) {
+      dispatch({
+        type: SET_INITIAL_STATE,
+        payload: data.me
+      });
+    }
+  }, [loading, data, dispatch]);
 
   if (loading) return <CircularProgress />;
   if (error) return <Alert severity="error">An error occurred while fetching user data!</Alert>;
+  if (!state.username) return <h2>Loading user data...</h2>; // Ensure data is there before rendering
 
-const me = data;
+  const { username, email, collections } = state;
 
   return (
     <Box sx={{ padding: 4 }}>
       <Typography variant="h4" gutterBottom>
         User Information
       </Typography>
-      <Typography variant="h6">Username: {me.username}</Typography>
-      <Typography variant="h6">Email: {me.email}</Typography>
+      <Typography variant="h6">Username: {username}</Typography>
+      <Typography variant="h6">Email: {email}</Typography>
       <Typography variant="h5" gutterBottom sx={{ mt: 2 }}>
         Collections
       </Typography>
-      {me.collections.map((collection) => (
+      {collections.map((collection) => (
         <Box key={collection._id} sx={{ mb: 2 }}>
           <Typography variant="subtitle1">{collection.collection_name}</Typography>
           {collection.products.map((product) => (

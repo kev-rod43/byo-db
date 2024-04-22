@@ -5,7 +5,7 @@ import UserProfile from "../components/common/UserProfile";
 
 const UserPage = () => {
 return(
-    <WelcomeBox></WelcomeBox>
+    <UserProfile/>
 )
 };
 
