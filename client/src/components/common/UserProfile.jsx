@@ -7,6 +7,11 @@ import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
 
 const UserPage = () => {
   const { loading, data, error } = useQuery(QUERY_ME);
@@ -23,7 +28,7 @@ const UserPage = () => {
 
   if (loading) return <CircularProgress />;
   if (error) return <Alert severity="error">An error occurred while fetching user data!</Alert>;
-  if (!state.username) return <h2>Loading user data...</h2>; // Ensure data is there before rendering
+  if (!state.username) return <h2>Loading user data...</h2>;
 
   const { username, email, collections } = state;
 
@@ -38,26 +43,27 @@ const UserPage = () => {
         Collections
       </Typography>
       {collections.map((collection) => (
-        <Box key={collection._id} sx={{ mb: 2 }}>
-          <Typography variant="subtitle1">{collection.collection_name}</Typography>
-          {collection.products.map((product) => (
-            <Box key={product._id} sx={{ ml: 2 }}>
-              <Typography variant="body1">Product Name: {product.product_name}</Typography>
-              <Typography variant="body2">Stock: {product.stock}</Typography>
-              <Typography variant="body2">Description: {product.description}</Typography>
-              <Typography variant="body2">Price: ${product.price}</Typography>
-              <Typography variant="body2">Condition: {product.condition}</Typography>
-              <Box sx={{ ml: 2, mt: 1 }}>
-                <Typography variant="body2">Shipping Dimensions (HxWxD): {product.shipping_properties.height} x {product.shipping_properties.width} x {product.shipping_properties.depth} inches</Typography>
-                <Typography variant="body2">Weight: {product.shipping_properties.weight} lbs</Typography>
+        <Card key={collection._id} sx={{ mb: 2, minWidth: 275 }}>
+          <CardContent>
+            <Typography variant="h6" component="div">
+              {collection.collection_name}
+            </Typography>
+            {collection.products.map((product) => (
+              <Box key={product._id} sx={{ ml: 2, mt: 2 }}>
+                <Typography variant="body1">Product Name: {product.product_name}</Typography>
+                <Typography variant="body2">Stock: {product.stock}</Typography>
+                <Typography variant="body2">Description: {product.description}</Typography>
+                <Typography variant="body2">Price: ${product.price}</Typography>
               </Box>
-              <Typography variant="body2">
-                Tags: {product.tags.map(tag => tag.tag_name).join(', ')}
-              </Typography>
-            </Box>
-          ))}
-        </Box>
+            ))}
+          </CardContent>
+        </Card>
       ))}
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+        <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={() => { /* Implement navigation to add collection */ }}>
+          Add Collection
+        </Button>
+      </Box>
     </Box>
   );
 };
