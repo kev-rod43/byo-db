@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import AlertDialog from '../forms/DeleteConfirm';
 import {
   DataGrid,
   GridToolbarContainer,
@@ -20,23 +21,30 @@ export default function CollectionDataGrid({ collection }) {
     height: false,
     width: false,
     depth: false,
+    _id: false,
   });
 
   const handleEditClick = () => () => {
     //TO DO:display form dialogue to update product useMutation update_product, then update state using reducer
+
     console.log("clicked edit")
   };
 
-  const handleDeleteClick = () => () => {
-    if (confirm("Are you sure you want to erase this entry?")) {
-      //TO DO:replace confirm with confirm dialogue useMutation delete_product, then update state using reducer
-    };
+  const [productToDelete, setProductToDelete] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+
+  const handleDeleteClick = (id) => () => {
+    //TO DO:replace confirm with confirm dialogue useMutation delete_product, then update state using reducer
+    setProductToDelete(flattenedData[id]._id);
+    setOpen(true);
+
+    
   }
   function EditToolbar() {
 
     const handleClick = () => {
       //TO DO:display form dialogue to make product useMutation create_product, then update state using reducer
-      confirm("lets make this stuff")
+      setOpen(true);
     };
 
     return (
@@ -52,6 +60,7 @@ export default function CollectionDataGrid({ collection }) {
   const flattenedData = [
     ...collection.products.map((product, index) => ({
       id: index,
+      _id: product._id,
       productName: product.product_name,
       stock: product.stock,
       description: product.description,
@@ -87,6 +96,7 @@ export default function CollectionDataGrid({ collection }) {
         ];
       },
     },
+    { field: "_id", headerName: "_id", type: "string" },
     { field: "productName", headerName: "Name", type: "string" },
     { field: "stock", headerName: "Stock", type: "number" },
     { field: "description", headerName: "Description", type: "string" },
@@ -99,31 +109,31 @@ export default function CollectionDataGrid({ collection }) {
     { field: "depth", headerName: "Depth", type: "number" },
   ]
 
-  return (
+  return ([
     <Box
-        sx={{
-            height: 500,
-            minWidth: '500px',
-            width: "auto",
-            '& .actions': {
-                color: 'text.secondary',
-            },
-            '& .textPrimary': {
-                color: 'text.primary',
-            },
-        }}
+      sx={{
+        height: 500,
+        minWidth: '500px',
+        width: "auto",
+        '& .actions': {
+          color: 'text.secondary',
+        },
+        '& .textPrimary': {
+          color: 'text.primary',
+        },
+      }}
     >
-        <DataGrid
-            rows={flattenedData}
-            columns={columnDefs}
-            columnVisibilityModel={columnVisibilityModel}
-            onColumnVisibilityModelChange={(newModel) =>
-              setColumnVisibilityModel(newModel)
-            }
-            slots={{
-                toolbar: EditToolbar,
-            }}
-        />
-    </Box>
-);
+      <DataGrid
+        rows={flattenedData}
+        columns={columnDefs}
+        columnVisibilityModel={columnVisibilityModel}
+        onColumnVisibilityModelChange={(newModel) =>
+          setColumnVisibilityModel(newModel)
+        }
+        slots={{
+          toolbar: EditToolbar,
+        }}
+      />
+    </Box>,
+  <AlertDialog productToDelete={productToDelete} collectionName= {collection.collection_name} modalState={[open, setOpen]}/>]);
 }

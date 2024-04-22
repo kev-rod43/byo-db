@@ -95,7 +95,7 @@ const resolvers = {
           { _id: context.user._id, 'collections.collection_name': collectionName },
           { $pull: { 'collections.$.products': { _id: productId } } },
           { new: true }
-        );
+        );  
         return updatedUser;
       }
       throw AuthenticationError
