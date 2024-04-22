@@ -22,7 +22,8 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import TocIcon from '@mui/icons-material/Toc';
-import HomeIcon from '@mui/icons-material/Home'; 
+import HomeIcon from '@mui/icons-material/Home';
+import LogoutIcon from '@mui/icons-material/Logout'; 
 import AuthService from '../../utils/auth'
 
 
@@ -153,6 +154,14 @@ export default function NavDrawer() {
               </ListItemButton>
             </ListItem>
           ))}
+          {!AuthService.isTokenExpired() && (
+        <ListItem key="logOut" disablePadding>
+        <ListItemButton onClick={() => AuthService.logout()}>
+          <ListItemIcon><LogoutIcon/></ListItemIcon>
+          <ListItemText primary={"Sign Out"} />
+        </ListItemButton>
+      </ListItem>
+      )}
         </List>
       </Drawer>
 

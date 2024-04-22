@@ -6,13 +6,14 @@ import SignupForm from '../forms/Signup';
 import auth from '../../utils/auth';
 
 function WelcomeBox() {
-  const [view, setView] = useState('welcome'); // 'welcome', 'login', 'signup'
-  // useEffect(()=>{
-  //   if(!auth.isTokenExpired()){
-      
-  //     setView('loggedIn')
-  //   }
-  // })
+  const [view, setView] = useState(''); // 'welcome', 'login', 'signup', loggedIn
+    useEffect(()=>{
+
+      if(auth.loggedIn()){
+        
+        setView('loggedIn')
+      } else {setView("welcome")}
+    },[])
 
   const handleLoginClick = () => {
     setView('login');
@@ -51,7 +52,7 @@ function WelcomeBox() {
       {view === "loggedIn" && (
          <>
          <Typography variant="h5" component="h1" gutterBottom>
-           Welcome!
+           Welcome! {auth.getProfile().data.username}
          </Typography>
 
        </>
@@ -59,7 +60,7 @@ function WelcomeBox() {
       {view === 'welcome' && (
         <>
           <Typography variant="h5" component="h1" gutterBottom>
-            Welcome!
+            Welcome! 
           </Typography>
           <Button variant="contained" color="primary" onClick={handleLoginClick}>Login</Button>
           <Button variant="outlined" color="primary" onClick={handleSignupClick}>Signup</Button>
