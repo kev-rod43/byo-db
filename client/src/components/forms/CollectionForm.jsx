@@ -1,12 +1,13 @@
 import * as React from "react";
-import { Container, Box, TextField, Button, Typography } from "@mui/material";
+import { TextField, Button, Dialog, DialogActions, DialogTitle, DialogContent } from "@mui/material";
 import { useMutation } from "@apollo/client";
-import { CREATE_COLLECTION } from "../../utils/mutations";
+import { CREATE_COLLECTION, UPDATE_COLLECTION } from "../../utils/mutations";
 import { useUserContext } from "../../utils/UserContext";
 
-export default function CollectionForm({ mode }) {
+export default function CollectionForm({ modalState, mode, collectionName }) {
   const [formData, setFormData] = React.useState({ name: "" });
-  const [addCollection, { data, error }] = useMutation(CREATE_COLLECTION);
+  const [addCollection, { data : creationData, error : creationError }] = useMutation(CREATE_COLLECTION);
+  const [updateCollection, { data : updateData, error : updateError }] = useMutation(UPDATE_COLLECTION);
   const handleChange = (e) => setFormData({ name: e.target.value });
 
   const handleSubmit = (e) => {
@@ -15,6 +16,9 @@ export default function CollectionForm({ mode }) {
       ? modeAdd() // replace with addCollection mutation
       : modeUpdate(); // replace with updateCollectin mutation
   };
+
+  const [open, setOpen] = modalState;
+  const handleClose = () => setOpen(false);
 
   const [state, dispatch] = useUserContext();
 
@@ -28,13 +32,25 @@ export default function CollectionForm({ mode }) {
         type: "SET_INITIAL_STATE",
         payload: data.createCollection,
       });
+      handleClose();
     } catch (err) {
       console.log(err);
     }
   };
 
-  const modeUpdate = () => {
-    console.log(`Collection updated.`);
+  const modeUpdate = async () => {
+    try {
+      const { data } = await updateCollection({
+        variables: { currentName: collectionName, newName: formData.name },
+      });
+      dispatch({
+        type: "SET_INITIAL_STATE",
+        payload: data.updateCollection,
+      });
+      handleClose();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const styles = {
@@ -49,29 +65,31 @@ export default function CollectionForm({ mode }) {
   };
 
   return (
-    <Container sx={styles.container}>
-      <Box>
-        <form style={styles} onSubmit={handleSubmit}>
-          <Typography sx={styles.formElements}>
-            {mode === "add"
-              ? `Enter a name for the collection`
-              : `What would you like to rename the database to?`}
-          </Typography>
+      <Dialog
+        sx={{ padding: '30px'}}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {mode === "add"
+            ? `Enter a name for the collection`
+            : `What would you like to rename the database to?`}
+        </DialogTitle>
+        <DialogContent>
           <TextField
             sx={styles.formElements}
             onChange={handleChange}
             placeholder="Books"
+            fullWidth
           />
-          <br />
-          <Button
-            sx={styles.formElements}
-            type="submit"
-            disabled={formData.name.trim() == ""}
-          >
-            Create
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleSubmit}>
+            {mode === "add" ? `Create` : `Update`}
           </Button>
-        </form>
-      </Box>
-    </Container>
+        </DialogActions>
+      </Dialog>
   );
 }

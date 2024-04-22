@@ -147,14 +147,14 @@ export default function NavDrawer() {
           </ListItem>
         )}
           {pages.map((page) => (
-            <ListItem key={page.name} disablePadding>
+            <ListItem key={page.name} disablePadding sx={isLoggedIn? {}:{display: "none"}}>
               <ListItemButton onClick={() => navigate(page.route)}>
                 <ListItemIcon>{page.icon}</ListItemIcon>
                 <ListItemText primary={page.name} />
               </ListItemButton>
             </ListItem>
           ))}
-          {!AuthService.isTokenExpired() && (
+          {isLoggedIn && (
         <ListItem key="logOut" disablePadding>
         <ListItemButton onClick={() => AuthService.logout()}>
           <ListItemIcon><LogoutIcon/></ListItemIcon>

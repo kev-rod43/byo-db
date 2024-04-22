@@ -13,6 +13,7 @@ import {
   GridActionsCellItem,
 } from '@mui/x-data-grid';
 import DeleteCollectionForm from '../forms/DeleteCollection';
+import CollectionForm from '../forms/CollectionForm';
 
 export default function CollectionDataGrid({ collection }) {
 
@@ -35,15 +36,20 @@ export default function CollectionDataGrid({ collection }) {
 
   const [productToDelete, setProductToDelete] = React.useState("");
   const [openDeleteProduct, setOpenDeleteProduct] = React.useState(false);
-  const [openDeleteCollection, setOpenDeleteCollection] = React.useState(false);
-
   const handleDeleteClick = (id) => () => {
     setProductToDelete(flattenedData[id]._id);
     setOpenDeleteProduct(true);
-
+    
   }
+
+  const [openDeleteCollection, setOpenDeleteCollection] = React.useState(false);
   const handleDeleteCollection = () => {
     setOpenDeleteCollection(true);
+  }
+
+  const [openUpdateCollection, setOpenUpdateCollection] = React.useState(false);
+  const handleUpdateCollection = () => {
+    setOpenUpdateCollection(true);
   }
 
   const [openCreateProduct, setOpenCreateProduct] = React.useState(false);
@@ -83,7 +89,7 @@ export default function CollectionDataGrid({ collection }) {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
-      width: 100,
+      width: "100",
       cellClassName: 'actions',
       getActions: ({ id }) => {
         return [
@@ -105,7 +111,7 @@ export default function CollectionDataGrid({ collection }) {
         ];
       },
     },
-    { field: "_id", headerName: "_id", type: "string" },
+    { field: "_id", headerName: "_id", type: "string"},
     { field: "productName", headerName: "Name", type: "string" },
     { field: "stock", headerName: "Stock", type: "number" },
     { field: "description", headerName: "Description", type: "string" },
@@ -136,6 +142,7 @@ export default function CollectionDataGrid({ collection }) {
       <DataGrid
         rows={flattenedData}
         columns={columnDefs}
+        autosizeOnMount
         columnVisibilityModel={columnVisibilityModel}
         onColumnVisibilityModelChange={(newModel) =>
           setColumnVisibilityModel(newModel)
@@ -145,6 +152,14 @@ export default function CollectionDataGrid({ collection }) {
         }}
       />
     </Box>,
+    <Button
+      onClick={handleUpdateCollection}
+      key="UpdateCollectionBtn"
+      size="small"
+      color="primary"
+    >
+      Update This Collection
+    </Button>,
     <Button
       onClick={handleDeleteCollection}
       key="DeleteCollectionBtn"
@@ -163,18 +178,22 @@ export default function CollectionDataGrid({ collection }) {
       collectionName={collection.collection_name}
       createProductModalState={[openCreateProduct, setOpenCreateProduct]}
     />,
-
+    <CollectionForm
+      key='UpdateCollectionForm'
+      mode='update'
+      collectionName={collection.collection_name}
+      modalState={[openUpdateCollection, setOpenUpdateCollection]}
+    />,
     <DeleteCollectionForm 
       key='DeleteCollectionForm'
       modalState={[openDeleteCollection, setOpenDeleteCollection]}
-      collectionName={ collection.collection_name }/>,
-
+      collectionName={ collection.collection_name }
+    />,
     <UpdateProductForm
       key="UpdateProductForm"
       collectionName={collection.collection_name}
       updateProductModalState={[openUpdateProduct, setOpenUpdateProduct]}
-      product={productToUpdate}/>
-
-
+      product={productToUpdate}
+    />
   ]);
 }

@@ -27,7 +27,6 @@ export const LOGIN = gql`
 export const UPDATE_COLLECTION = gql`
   mutation updateCollection($currentName: String!, $newName: String!) {
     updateCollection(currentName: $currentName, newName: $newName) {
-      user {
         _id
         username
         email
@@ -52,7 +51,6 @@ export const UPDATE_COLLECTION = gql`
               tag_name
             }
           }
-        }
       }
     }
   }
