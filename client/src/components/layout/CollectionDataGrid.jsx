@@ -135,11 +135,20 @@ export default function CollectionDataGrid({ collection }) {
         }}
       />
     </Box>,
+    <Button
+      key="DeleteCollectionBtn"
+      size="small"
+      color="error"
+      >
+      Delete This Collection
+    </Button>,
     <ProductDeleteConfirm
+      key="ProductDeleteConfirm"
       productToDelete={productToDelete}
       collectionName={collection.collection_name}
       deleteProductModalState={[openDeleteProduct, setOpenDeleteProduct]} />,
     <CreateProductForm 
+      key="CreateProductForm"
       collectionName={collection.collection_name}
       createProductModalState={[openCreateProduct, setOpenCreateProduct]}
     />

@@ -36,7 +36,6 @@ export default function ProductDeleteConfirm({ deleteProductModalState, productT
     const [open, setOpen] = deleteProductModalState;
 
     return (
-        <React.Fragment>
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -53,6 +52,5 @@ export default function ProductDeleteConfirm({ deleteProductModalState, productT
                     </Button>
                 </DialogActions>
             </Dialog>
-        </React.Fragment>
     );
 }
