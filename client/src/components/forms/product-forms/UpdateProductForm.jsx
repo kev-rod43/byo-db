@@ -9,11 +9,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useMutation } from '@apollo/client';
 import { useUserContext } from '../../../utils/UserContext';
-import { CREATE_PRODUCT } from '../../../utils/mutations';
+import { UPDATE_PRODUCT } from '../../../utils/mutations';
 
-export default function CreateProductForm({ createProductModalState, collectionName }) {
-  const [open, setOpen] = createProductModalState;
-  const [createProduct, { data, error }] = useMutation(CREATE_PRODUCT);
+export default function UpdateProductForm({ updateProductModalState, collectionName, product }) {
+  const [open, setOpen] = updateProductModalState;
+  const [updateProduct, { data, error }] = useMutation(UPDATE_PRODUCT);
   const [state, dispatch] = useUserContext()
   const handleClose = () => {
     setOpen(false);
@@ -38,13 +38,13 @@ export default function CreateProductForm({ createProductModalState, collectionN
       }
     }
     try {
-      const { data, error } = await createProduct({
-        variables: { collectionName: collectionName, productInput: productInput }
+      const { data, error } = await updateProduct({
+        variables: { collectionName: collectionName, updatedProductObject: productInput, productId: product._id }
       })
       if (!error) {
         dispatch({
           type: "SET_INITIAL_STATE",
-          payload: data.createProduct
+          payload: data.updateProduct
         })
       }
       handleClose();
@@ -62,10 +62,10 @@ export default function CreateProductForm({ createProductModalState, collectionN
         onSubmit: submitHandler
       }}
     >
-      <DialogTitle>Create a Product</DialogTitle>
+      <DialogTitle>Edit Product</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          To create a product, simply fill the at least the minimum required fields, then click "Sumbit"
+          To edit a product, simply fill/modify the at least the minimum required fields, then click "Sumbit"
         </DialogContentText>
         <TextField
           autoFocus
@@ -77,6 +77,7 @@ export default function CreateProductForm({ createProductModalState, collectionN
           type="text"
           fullWidth
           variant="standard"
+          defaultValue={product.product_name}
         />
         <TextField
           required
@@ -87,6 +88,7 @@ export default function CreateProductForm({ createProductModalState, collectionN
           type="number"
           fullWidth
           variant="standard"
+          defaultValue={product.stock}
         />
         <TextField
           margin="dense"
@@ -96,6 +98,7 @@ export default function CreateProductForm({ createProductModalState, collectionN
           type="text"
           fullWidth
           variant="standard"
+          defaultValue={product.description}
         />
         <TextField
           margin="dense"
@@ -104,6 +107,7 @@ export default function CreateProductForm({ createProductModalState, collectionN
           label="Acquisition Cost"
           type="number"
           variant="standard"
+          defaultValue={product.purchased}
           sx={{
             width: "49%",
             marginRight: "2%"
@@ -121,6 +125,7 @@ export default function CreateProductForm({ createProductModalState, collectionN
           type="number"
           variant="standard"
           sx={{ width: "49%" }}
+          defaultValue={product.price}
           InputProps={{
             endAdornment: <InputAdornment position="end">$</InputAdornment>,
           }}
@@ -133,6 +138,7 @@ export default function CreateProductForm({ createProductModalState, collectionN
           type="text"
           fullWidth
           variant="standard"
+          defaultValue={product.condition}
         />
         <TextField
           margin="dense"
@@ -141,6 +147,7 @@ export default function CreateProductForm({ createProductModalState, collectionN
           label="Product Height"
           type="number"
           variant="standard"
+          defaultValue={product.shipping_properties?.height}
           sx={{
             width: "49%",
             marginRight: "2%"
@@ -157,6 +164,7 @@ export default function CreateProductForm({ createProductModalState, collectionN
           label="Product Width"
           type="number"
           variant="standard"
+          defaultValue={product.shipping_properties?.width}
           sx={{ width: "49%" }}
           InputProps={{
             endAdornment: <InputAdornment position="end">cm</InputAdornment>,
@@ -169,6 +177,7 @@ export default function CreateProductForm({ createProductModalState, collectionN
           label="Product Depth"
           type="number"
           variant="standard"
+          defaultValue={product.shipping_properties?.depth}
           sx={{
             width: "49%",
             marginRight: "2%"
@@ -184,6 +193,7 @@ export default function CreateProductForm({ createProductModalState, collectionN
           label="Product Weight"
           type="number"
           variant="standard"
+          defaultValue={product.shipping_properties?.weight}
           sx={{ width: "49%" }}
           InputProps={{
             endAdornment: <InputAdornment position="end">g</InputAdornment>,

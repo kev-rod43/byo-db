@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import ProductDeleteConfirm from "../forms/product-forms/DeleteConfirm"
 import CreateProductForm from '../forms/product-forms/CreateProductForm';
+import UpdateProductForm from '../forms/product-forms/UpdateProductForm';
 import {
   DataGrid,
   GridToolbarContainer,
@@ -24,11 +25,11 @@ export default function CollectionDataGrid({ collection }) {
     depth: false,
     _id: false,
   });
-
-  const handleEditClick = () => () => {
-    //TO DO:display form dialogue to update product useMutation update_product, then update state using reducer
-
-    console.log("clicked edit")
+  const [productToUpdate, setProductToUpdate] = React.useState({});
+  const [openUpdateProduct, setOpenUpdateProduct] = React.useState(false);
+  const handleEditClick = (id) => () => {
+    setProductToUpdate(collection.products[id])
+    setOpenUpdateProduct(true)
   };
 
   const [productToDelete, setProductToDelete] = React.useState("");
@@ -151,6 +152,12 @@ export default function CollectionDataGrid({ collection }) {
       key="CreateProductForm"
       collectionName={collection.collection_name}
       createProductModalState={[openCreateProduct, setOpenCreateProduct]}
+    />,
+    <UpdateProductForm
+      key="UpdateProductForm"
+      collectionName={collection.collection_name}
+      updateProductModalState={[openUpdateProduct, setOpenUpdateProduct]}
+      product={productToUpdate}
     />
   ]);
 }
