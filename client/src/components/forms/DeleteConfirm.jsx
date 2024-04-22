@@ -5,40 +5,50 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useMutation } from '@apollo/client';
 
-export default function AlertDialog() {
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+import { DELETE_PRODUCT } from '../../utils/mutations';
 
-  return (
-    <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
-  );
+export default function AlertDialog({ modalState, productToDelete, collectionName }) {
+    const [deleteProduct, { data, error }] = useMutation(DELETE_PRODUCT);
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleYes = async () => {
+        // we grab the product's id and delete from database and then use reducer to change local state
+        try {
+            const { data } = await deleteProduct({
+                variables: { collectionName: collectionName, productId: productToDelete }
+            })
+        } catch {
+
+        }
+        handleClose();
+    }
+
+    const [open, setOpen] = modalState;
+
+    return (
+        <React.Fragment>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    Are you sure you want to delete the product?
+                </DialogTitle>
+                <DialogActions>
+                    <Button onClick={handleClose}>No</Button>
+                    <Button onClick={handleClose} autoFocus>
+                        Yes
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </React.Fragment>
+    );
 }

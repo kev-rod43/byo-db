@@ -30,10 +30,12 @@ export default function CollectionDataGrid({ collection }) {
     console.log("clicked edit")
   };
 
+  const [productToDelete, setProductToDelete] = react.useState("");
   const [open, setOpen] = React.useState(false);
 
-  const handleDeleteClick = () => () => {
+  const handleDeleteClick = (id) => () => {
     //TO DO:replace confirm with confirm dialogue useMutation delete_product, then update state using reducer
+    setProductToDelete(flattenedData[id]._id);
     setOpen(true);
 
     
@@ -42,7 +44,7 @@ export default function CollectionDataGrid({ collection }) {
 
     const handleClick = () => {
       //TO DO:display form dialogue to make product useMutation create_product, then update state using reducer
-      confirm("lets make this stuff")
+      setOpen(true);
     };
 
     return (
@@ -107,8 +109,7 @@ export default function CollectionDataGrid({ collection }) {
     { field: "depth", headerName: "Depth", type: "number" },
   ]
 
-  return (
-    //<AlertDialog>
+  return ([
     <Box
       sx={{
         height: 500,
@@ -133,6 +134,6 @@ export default function CollectionDataGrid({ collection }) {
           toolbar: EditToolbar,
         }}
       />
-    </Box>
-  );
+    </Box>,
+  <AlertDialog productToDelete={productToDelete} collectionName= {collection.collection_name} modalState={[open, setOpen]}/>]);
 }
