@@ -4,7 +4,8 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import AlertDialog from '../forms/DeleteConfirm';
+import ProductDeleteConfirm from "../forms/product-forms/DeleteConfirm"
+import CreateProductForm from '../forms/product-forms/CreateProductForm';
 import {
   DataGrid,
   GridToolbarContainer,
@@ -31,25 +32,24 @@ export default function CollectionDataGrid({ collection }) {
   };
 
   const [productToDelete, setProductToDelete] = React.useState("");
-  const [open, setOpen] = React.useState(false);
+  const [openDeleteProduct, setOpenDeleteProduct] = React.useState(false);
 
   const handleDeleteClick = (id) => () => {
-    //TO DO:replace confirm with confirm dialogue useMutation delete_product, then update state using reducer
     setProductToDelete(flattenedData[id]._id);
-    setOpen(true);
+    setOpenDeleteProduct(true);
 
-    
   }
+
+  const [openCreateProduct, setOpenCreateProduct] = React.useState(false);
   function EditToolbar() {
 
-    const handleClick = () => {
-      //TO DO:display form dialogue to make product useMutation create_product, then update state using reducer
-      setOpen(true);
+    const handleAddProduct =() => {
+      setOpenCreateProduct(true);
     };
 
     return (
       <GridToolbarContainer>
-        <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+        <Button color="primary" startIcon={<AddIcon />} onClick={handleAddProduct}>
           Add product
         </Button>
       </GridToolbarContainer>
@@ -135,5 +135,13 @@ export default function CollectionDataGrid({ collection }) {
         }}
       />
     </Box>,
-  <AlertDialog productToDelete={productToDelete} collectionName= {collection.collection_name} modalState={[open, setOpen]}/>]);
+    <ProductDeleteConfirm
+      productToDelete={productToDelete}
+      collectionName={collection.collection_name}
+      deleteProductModalState={[openDeleteProduct, setOpenDeleteProduct]} />,
+    <CreateProductForm 
+      collectionName={collection.collection_name}
+      createProductModalState={[openCreateProduct, setOpenCreateProduct]}
+    />
+  ]);
 }
