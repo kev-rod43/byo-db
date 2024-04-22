@@ -64,7 +64,7 @@ export default function VerticalTabs() {
 
   return (
     <Box
-      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224 }}
+      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: "auto" }}
     >
       <Tabs
         key=""
