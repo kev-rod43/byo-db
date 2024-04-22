@@ -1,11 +1,6 @@
-import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  createHttpLink,
-} from '@apollo/client';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
@@ -20,8 +15,6 @@ import BoxTest from "./components/common/Welcome"
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
-
-
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const authLink = setContext((_, { headers }) => {
@@ -43,7 +36,7 @@ const client = new ApolloClient({
 });
 
 function App() {
-return (
+  return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
         <UserProvider>

@@ -102,9 +102,10 @@ const resolvers = {
     },
     updateProduct: async (parent, { collectionName,updatedProductObject, productId }, context) => {
       if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
+        const updatedUser = await User.findOne(
           { _id: context.user._id, },
         );
+        updatedProductObject._id = productId;
         const foundCollection = updatedUser.collections.filter((collection) => collection.collection_name === collectionName);
         foundCollection[0].products[foundCollection[0].products.findIndex((product)=>product._id == productId)] = updatedProductObject;
         updatedUser.collections[updatedUser.collections.findIndex((collection) => collection.collection_name === collectionName)] = foundCollection[0];
