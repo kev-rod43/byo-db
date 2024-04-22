@@ -27,8 +27,8 @@ export default function CollectionForm({ mode }) {
                 variables: { collectionName: formData.name }
             });
             dispatch({
-                type: "CREATE_COLLECTION",
-                payload: formData.name
+                type: "SET_INITIAL_STATE",
+                payload: data.createCollection
             });
         } catch (err) {
             console.log(err);
