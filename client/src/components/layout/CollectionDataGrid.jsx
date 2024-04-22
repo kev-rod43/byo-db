@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import AlertDialog from '../forms/DeleteConfirm';
 import {
   DataGrid,
   GridToolbarContainer,
@@ -24,13 +25,17 @@ export default function CollectionDataGrid({ collection }) {
 
   const handleEditClick = () => () => {
     //TO DO:display form dialogue to update product useMutation update_product, then update state using reducer
+
     console.log("clicked edit")
   };
 
+  const [open, setOpen] = React.useState(false);
+
   const handleDeleteClick = () => () => {
-    if (confirm("Are you sure you want to erase this entry?")) {
-      //TO DO:replace confirm with confirm dialogue useMutation delete_product, then update state using reducer
-    };
+    //TO DO:replace confirm with confirm dialogue useMutation delete_product, then update state using reducer
+    setOpen(true);
+
+    
   }
   function EditToolbar() {
 
@@ -100,30 +105,31 @@ export default function CollectionDataGrid({ collection }) {
   ]
 
   return (
+    <AlertDialog>
     <Box
-        sx={{
-            height: 500,
-            minWidth: '500px',
-            width: "auto",
-            '& .actions': {
-                color: 'text.secondary',
-            },
-            '& .textPrimary': {
-                color: 'text.primary',
-            },
-        }}
+      sx={{
+        height: 500,
+        minWidth: '500px',
+        width: "auto",
+        '& .actions': {
+          color: 'text.secondary',
+        },
+        '& .textPrimary': {
+          color: 'text.primary',
+        },
+      }}
     >
-        <DataGrid
-            rows={flattenedData}
-            columns={columnDefs}
-            columnVisibilityModel={columnVisibilityModel}
-            onColumnVisibilityModelChange={(newModel) =>
-              setColumnVisibilityModel(newModel)
-            }
-            slots={{
-                toolbar: EditToolbar,
-            }}
-        />
+      <DataGrid
+        rows={flattenedData}
+        columns={columnDefs}
+        columnVisibilityModel={columnVisibilityModel}
+        onColumnVisibilityModelChange={(newModel) =>
+          setColumnVisibilityModel(newModel)
+        }
+        slots={{
+          toolbar: EditToolbar,
+        }}
+      />
     </Box>
-);
+  );
 }
