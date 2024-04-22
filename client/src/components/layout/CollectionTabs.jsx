@@ -1,8 +1,10 @@
+import * as React from 'react';
 import { useState } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import {useUserContext} from '../../utils/UserContext'
 import CollectionDataGrid from './CollectionDataGrid'
 import { QUERY_ME } from '../../utils/queries';
@@ -38,11 +40,16 @@ function a11yProps(index) {
   };
 }
 
+const ButtonInTabs = ({ className, onClick, children }) => {
+  return <Button className={className} onClick={onClick} children={children} />;
+};
+
 export default function VerticalTabs() {
   const { loading, data } = useQuery(QUERY_ME);
   const [value, setValue] = useState(0);
   const [state, dispatch] = useUserContext();
   useEffect( () => {
+    console.log(state);
     if (!loading){
        dispatch({
         type: SET_INITIAL_STATE,
@@ -54,6 +61,9 @@ export default function VerticalTabs() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const [open, setOpen] = React.useState(false);
+  const handleAddCollection = () => setOpen(true);
   
   if (loading) {
     return <h2>LOADING...</h2>;
@@ -75,20 +85,22 @@ export default function VerticalTabs() {
         aria-label="Vertical tabs"
         sx={{ borderRight: 1, borderColor: 'divider' }}
       >
-        <Tab label="ADD A COLLECTION" {...a11yProps(0)} />
         {state?.collections.map((collection,index) => (
-            <Tab key={index + "collection"}label={collection.collection_name} {...a11yProps(index+1)} />
+            <Tab key={index + "collection"}label={collection.collection_name} {...a11yProps(index)} />
             
         ))}
+        <ButtonInTabs
+          onClick={handleAddCollection}
+        >
+          Add a Collection
+        </ButtonInTabs>
       </Tabs>
-      <TabPanel value={value} index={0}>
-            <CollectionForm mode="add"/>
-          </TabPanel>
       {state?.collections.map((collection,index) => (
-            <TabPanel key={index + "TabPanel"}value={value} index={index+1}>
+            <TabPanel key={index + "TabPanel"}value={value} index={index}>
             <CollectionDataGrid key={index + "CollectionDataGrid"} collection={collection}/>
           </TabPanel>
         ))}
+      <CollectionForm mode='add' collectionName='' modalState={[open, setOpen]}/>
     </Box>
   );
 }
